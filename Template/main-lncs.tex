@@ -1,0 +1,75 @@
+%%%%%%%%%%%%%%%%%%%%
+
+% Project Name:
+% File: main-lncs.tex
+% Author: Keng-Yu Chen
+
+%%%%%%%%%%%%%%%%%%%%
+
+\input{header-lncs}
+
+\begin{document}
+\maketitle
+
+\section{INC-CPA Game}
+
+Use \texttt{algorithm} and \texttt{algpseudocode}.
+\begin{figure}[h]
+\centering
+
+    \begin{minipage}{0.4\linewidth}
+    \centering
+    \begin{algorithm}[H]
+    \caption{$\mathsf{IND\text{-}CPA}$(\adv)}
+    \label{alg:ind-cpa}
+    \begin{algorithmic}[1]
+		\State $b \sample \bin$
+
+        \State $\pk, \sk \sample \kgen(\secparam)$
+        
+        \State $(m_0, m_1) \gets \adv(\pk)$
+
+        \State $c \sample \enc(\pk, m_b)$
+
+        \State $b^\prime \gets \adv(\pk, c)$
+        \State \Return $\mathbbm{1}_{b = b^\prime}$
+    \end{algorithmic}
+    \end{algorithm}
+    \end{minipage}
+
+\end{figure}
+
+Or use \texttt{\textbackslash procedureblock}
+
+\procedureblock[linenumbering, syntaxhighlight=auto]{$\indcpa_\enc^\adv(\secpar)$}{
+    b \sample \bin \\
+    (\pk, \sk) \sample \kgen(\secparam) \\
+    (m_0, m_1) \sample \adv(\secparam, \pk, c) \\
+    c \sample \enc(\pk, m_b) \\
+    b^\prime \gets \adv(\secparam, \pk, c) \\
+    \pcreturn \mathbbm{1}_{b = b'}
+}
+
+With a Figure environment:
+
+\begin{figure}
+    \procedureblock[linenumbering, syntaxhighlight=auto]{$\indcpa_\enc^\adv(\secpar)$}{
+        b \sample \bin \\
+        (\pk, \sk) \sample \kgen(\secparam) \\
+        (m_0, m_1) \sample \adv(\secparam, \pk, c) \\
+        c \sample \enc(\pk, m_b) \\
+        b^\prime \gets \adv(\secparam, \pk, c) \\
+        \pcreturn \mathbbm{1}_{b = b'}
+    }
+    \caption{\indcpa Game}
+    \label{fig:ind-cpa}
+\end{figure}
+
+%-------------------
+%% Reference List
+\pagebreak
+
+\nocite{*}
+\printbibliography
+
+\end{document}

@@ -1,0 +1,116 @@
+%%%%%%%%%%%%%%%%%%%%
+
+% Project Name:
+% File: header-lncs.tex
+% Author: Keng-Yu Chen
+
+%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper, runningheads]{llncs}
+\usepackage[utf8]{inputenc}
+
+% Include Packages
+\usepackage{mathrsfs}
+\usepackage{color}
+\usepackage{amsmath,amssymb}
+\usepackage{pifont}
+\newcommand{\xmark}{\ding{55}}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{stmaryrd}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{thmtools}
+\usepackage{hyperref}
+% \hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,filecolor=magenta,urlcolor=blue} % set color for hyperlinks
+% set pdf headers for sections
+\usepackage{bookmark} 
+\bookmarksetup{
+	depth=3,
+}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{input:}}
+\renewcommand{\algorithmicensure}{\textbf{output:}}
+
+\usepackage[
+    lambda,
+    advantage,
+    operators,
+    sets,
+    adversary,
+    landau,
+    probability,
+    notions,
+    logic,
+    ff,
+    mm,
+    primitives,
+    events,
+    complexity,
+    oracles,
+    asymptotics,
+    keys
+]{cryptocode}
+
+% Set Self-defined Words
+\renewcommand{\verify}{\mathsf{Vrfy}}
+\newcommand{\Adv}{\mathbf{Adv}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{4}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+\spnewtheorem{assumption}{Assumption}{\bfseries}{\itshape}
+
+% TikZ Setting
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{backgrounds}
+
+\tikzstyle{st-arrow} = [thick,->,>=stealth]
+\tikzstyle{arrow} = [thick,-latex']
+\tikzstyle{darrow} = [thick,latex'-latex']
+
+\tikzstyle{gadget} = [rectangle, rounded corners,
+	minimum width=2cm,
+	minimum height=1cm,
+	text centered,
+	draw=black
+]
+
+\tikzstyle{element} = [rectangle, rounded corners,
+	minimum width=2cm,
+	minimum height=1.2cm,
+	text centered,
+	fill=white!70!black,
+	draw=black
+]
+\pgfdeclarelayer{background layer}
+\pgfdeclarelayer{foreground layer}
+\pgfsetlayers{background layer,main,foreground layer}
+
+% Add Referemces
+\usepackage[
+	backend=biber,
+	style=alphabetic,
+	sorting=ynt
+]{biblatex}
+\addbibresource{reference.bib}
+
+\title{\textbf{LNCS Template Title}\\Template number}
+\author{Keng-Yu Chen}
+\date{\today}

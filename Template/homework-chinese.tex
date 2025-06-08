@@ -1,0 +1,507 @@
+%%%%%%%%%%%%%%%%%%%%
+
+% Project Name:
+% File: homework-chinese.tex
+% Author: Keng-Yu Chen
+
+%%%%%%%%%%%%%%%%%%%%
+
+\input{header-chinese}
+
+% Title page configuration
+\title{\textbf{Quantum Information and Computation 2023}\\Homework 1}
+\author{Name: 陳耕宇 \quad ID:R11921066}
+\date{}
+%------------------------------------------------------------
+
+\begin{document}
+
+\begin{CJK*}{UTF8}{bsmi}
+\maketitle
+\end{CJK*}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{QIC 2023}
+\fancyhead[C]{Homework 1}
+\fancyhead[R]{R11921066}
+\fancyfoot[C]{\thepage}
+\begin{enumerate}
+
+\item[1.] \textbf{Basic entanglement for two qubits}
+
+\begin{enumerate}
+    \item [(a)]
+    Suppose there exist two 1-qubit states $\psi_1 = a |0\rangle + b|1\rangle, \psi_2 = c |0\rangle + d|1\rangle$ such that
+    \[
+    \psi_1 \otimes \psi_2 = |A_k \rangle = \frac{1}{2} ( |00\rangle + |01\rangle + |10\rangle + (-1)^k |11\rangle ) 
+    \]
+    This implies
+    \[
+    ac = \frac{1}{2} \quad ad = \frac{1}{2} \quad bc = \frac{1}{2} \quad bd = (-1)^k \frac{1}{2}
+    \]
+    For $k = 0$, the above follows with $a = b = c = d = \frac{1}{\sqrt{2}}$. Hence $|A_k\rangle$ is unentangled in this case. However, if $k = 1$, it implies $bd = -\frac{1}{2}$ and
+    \[
+    b(c+d) = bc + bd = 0
+    \]
+    Since $bc \neq 0$, $b \neq 0$ and therefore $c+d = 0$. But this contradicts that $a(c+d) = ac + ad = 1$. As a result, $|A_k\rangle$ is entangled when $k=1$.
+
+    \item[(b)] Let $U_1, U_2$ be two 1-qubit unitary operations and
+    \[
+    (U_1 \otimes U_2) |0\rangle |0 \rangle = A_k 
+    \]
+    This implies
+    \[
+    U_1 |0\rangle \otimes U_2 |0\rangle = A_k
+    \]
+    From 1a, we already know that for $k=1$, $A_k$ is entangled and thus any 1-qubit unitary operation could not make $A_k$ prepared from $|0\rangle |0\rangle $. On the other hand for $k = 0$, since $U_1, U_2$ are invertible, $A_k$ can be prepared from $|0\rangle |0\rangle $ with proper $U_1, U_2$. For example, if we let
+    \[
+    U_1  = U_2 = \begin{bmatrix} 
+    \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\ 
+    \frac{1}{\sqrt{2}} & \frac{-1}{\sqrt{2}}
+    \end{bmatrix}
+    \]
+    \[
+    U_1 |0\rangle = U_2 |0\rangle = \begin{bmatrix}
+    \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}
+    \end{bmatrix}
+    \quad
+    U_1 |0\rangle \otimes U_2 |0\rangle = \begin{bmatrix}
+    \frac{1}{2} \\ \frac{1}{2} \\ \frac{1}{2} \\ \frac{1}{2}
+    \end{bmatrix}
+     = A_0
+    \]
+
+    \item[(c)] Following the context in 1a, the vector $\psi$ is entangled if and only if we cannot find $a, b, c, d$ such that
+    \[
+    ac = \alpha \quad ad = \beta \quad bc = \gamma \quad bd = \delta
+    \]
+    Suppose such $a, b, c, d$ exist, then
+    \[
+    \alpha \delta - \beta \gamma = acbd - adbc = 0
+    \]
+    On the other hand, suppose now $\alpha \delta - \beta \gamma = 0$. Since $|\alpha|^2 + |\beta|^2 + |\gamma|^2 + |\delta|^2 = 1$, at least one of the four is not zero. Without loss of generosity let $a \neq 0$, then we can consider the tuple $(a, b, c, d)$ to be
+    \[
+    (a, b, c, d) = \left(\frac{\alpha}{\sqrt{|\alpha|^2 + |\gamma|^2}}, \frac{\gamma}{\sqrt{|\alpha|^2 + |\gamma|^2}}, \sqrt{|\alpha|^2 + |\gamma|^2}, \sqrt{|\alpha|^2 + \gamma|^2}\frac{\beta}{\alpha} \right)
+    \]
+    Note that it follows
+    \[
+    ac = \alpha \quad ad = \beta \quad bc = \gamma \quad bd = \delta
+    \]
+    and $|a|^2 + |b|^2 = |c|^2 + |d|^2 = 1$.
+    
+\end{enumerate}
+
+
+\item[2.] \textbf{Entangled quantum operation}
+
+\begin{enumerate}
+    \item[(a)] Assume that under the basis $|0\rangle, |1\rangle$, $U$ can be parameterized as
+    \[ U = 
+    \begin{bmatrix}
+    U_{11} & U_{12} \\ U_{21} & U_{22}
+    \end{bmatrix}
+    \]
+    Then we can write $CU$ under the standard basis $|00\rangle, |01\rangle, |10 \rangle, |11\rangle$ as
+    \[ CU = 
+    \begin{bmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & U_{11} & U_{12} \\
+    0 & 0 & U_{21} & U_{22}
+    \end{bmatrix}
+    \]
+
+    \item[(b)] From the above parameterization of $CU$, one can check that $CU (CU)^\dag = (CU)^\dag CU = I$ follows from the fact that $U U^\dag = U^\dag U = I$
+
+    \item[(c)]
+    Under standard basis $|0\rangle, |1\rangle$, the Pauli matrix $X$ is
+    \[
+    X = \begin{bmatrix}
+        0 & 1 \\ 1 & 0
+    \end{bmatrix}
+    \]
+    Therefore, under the standard basis $|00\rangle, |01\rangle, |10 \rangle, |11\rangle$, $CU$ is parameterized as
+    \[ CX = 
+    \begin{bmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0
+    \end{bmatrix}
+    \]
+    Suppose $CX = U_1 \otimes U_2$, then the left-upper corner 2-by-2 block and the right-lower corner 2-by-2 block of matrix $CU$ should be differed by only a constant. That is, there should exist some $d$ such that
+    \[
+    \begin{bmatrix}
+        1 & 0 \\ 0 & 1
+    \end{bmatrix} =  d   \begin{bmatrix}
+        0 & 1 \\ 1 & 0
+    \end{bmatrix}
+    \]
+    Obviously such $d$ does not exist, and hence $CX$ cannot be written as a tensor product of some 1-qubit $U_1, U_2$
+
+    \item[(d)] We show $CU$ can create some entangled state from some product state by an example. Consider the state
+    \[
+    |\psi\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle) \otimes |0\rangle
+    \]
+    This is a product state, and when $CU$ operates on $|\psi\rangle$,
+    \[
+    CU |\psi\rangle = \frac{1}{\sqrt{2}} [ CU |0\rangle |0\rangle + CU |1\rangle |0\rangle ] = \frac{1}{\sqrt{2}}[ |0\rangle |0\rangle + |1\rangle \otimes U|0\rangle ]
+    \]
+    Now if $U = X$, we have
+    \[
+    CU |\psi\rangle = \frac{1}{\sqrt{2}}[ |0\rangle |0\rangle + |1\rangle |1\rangle ]
+    \]
+    As we see in problem 1c, $CU |\psi\rangle$ is entangled.
+\end{enumerate}
+
+
+\item[3.] \textbf{Born rule, Pauli operations.}
+
+Given any basis $\mathcal{B}$, let $P$ be any projection which is parameterized under $\mathcal{B}$ as
+\[
+P = \begin{bmatrix}
+    a & c \\ b & d
+\end{bmatrix}
+\]
+Without loss of generosity we assume $P \neq I \text{ or } O$. That is, $P$ does not measure total probability or is trivial. If $P = I$, then the probability is trivially 1. If $P = O$, then the probability is trivially 0. Now, the probability measured by $P$ is
+\begin{align*}
+& \frac{1}{4} Pr_{|\psi \rangle} + \frac{1}{4} Pr_{X|\psi\rangle} + \frac{1}{4} Pr_{Y|\psi\rangle} + \frac{1}{4} Pr_{Z|\psi\rangle} \\
+= \quad & \frac{1}{4} \langle \psi | P |\psi \rangle + \frac{1}{4} \langle \psi| X^\dag P X|\psi\rangle + \frac{1}{4} \langle\psi| Y^\dag P Y|\psi\rangle + \frac{1}{4} \langle \psi| Z^\dag P Z|\psi\rangle \\
+= \quad & \frac{1}{4}( \langle \psi | (P + X^\dag P X + Y^\dag P Y + Z^\dag P Z) |\psi\rangle)
+\end{align*}
+The four matrices $ P, X^\dag P X, Y^\dag P Y$, and $Z^\dag P Z $ are
+\begin{align*}
+P &= (|0\rangle \langle 0 | + |1\rangle \langle 1 |) P (|0\rangle \langle 0 | + |1\rangle \langle 1 |) \\
+X^\dag P X &= (|1\rangle \langle 0 | + |0\rangle \langle 1 |) P (|0\rangle \langle 1 | + |1\rangle \langle 0 |) \\
+Y^\dag P Y &= (i|1\rangle \langle 0 | -i |0\rangle \langle 1 |) P (-i|0\rangle \langle 1| + i|1\rangle \langle 0 |) \\
+Z^\dag P Z &= (|0\rangle \langle 0| - |1\rangle \langle 1 |) P (|0\rangle \langle 0 | - |1\rangle \langle 1 |) 
+\end{align*}
+Summing them together, by law of distribution one gets
+\[
+P + X^\dag P X + Y^\dag P Y + Z^\dag P Z = 2[ |0\rangle \langle 0 | P |0\rangle \langle 0 | + |1\rangle \langle 1| P |1\rangle \langle 1| + |0\rangle \langle 1 | P |1\rangle \langle 0 | + |1\rangle \langle 0 | P |0\rangle \langle 1|]
+\]
+Note that $\langle v | P |v\rangle$  is a complex number for any state $v$, so we can change the multiplication order and derive
+\[
+2( \langle 0 | P | 0 \rangle + \langle 1 | P | 1 \rangle ) |0\rangle \langle 0| + |1\rangle \langle 1| =   2( \langle 0 | P | 0 \rangle + \langle 1 | P | 1 \rangle ) I
+\]
+Now let $|0\rangle = \begin{bmatrix}
+\psi_1 \\ \psi_2
+\end{bmatrix}$ parameterized under basis $\mathcal{B}$ with $\psi_1^2 + \psi_2^2 = 1$. Since $|0\rangle  \bot |1 \rangle$, $|1\rangle = \begin{bmatrix}
+    \psi_2 \\ -\psi_1
+\end{bmatrix}$
+\[
+\langle 0 | P | 0 \rangle + \langle 1 | P | 1 \rangle = (\psi_1^2 + \psi_2^2) a + (\psi_2^2 + \psi_1^2) d = a + d
+\]
+Also since $P$ is a projection, $P^2 = P$ and therefore
+\[
+a^2 + bc = a, ac + cd = c, bc + d^2 = d, ab+bd = b
+\]
+Suppose $b \neq 0$ or $c \neq 0$, it directly implies $a+d= 1$. If now $b = c = 0$, then it leads to $a = 0,1$ and $d = 0,1$. As we assume $P$ is not $I$ or $O$ at initial, $a + d = 1$. Finally, we derive the probability
+\[
+\frac{1}{4} Pr_{|\psi \rangle} + \frac{1}{4} Pr_{X|\psi\rangle} + \frac{1}{4} Pr_{Y|\psi\rangle} + \frac{1}{4} Pr_{Z|\psi\rangle} = \frac{1}{4} \langle \psi | 2I | \psi \rangle = \frac{1}{2}
+\]
+
+
+\item[4.] \textbf{Schmidt form; making 2-qubit states}
+
+\begin{enumerate}
+    \item[(a)]  For state $|a\rangle |b\rangle$, we may consider basis $\{|a\rangle, |a^\bot \rangle\}$ for system A and basis $\{|b\rangle, |b^\bot \rangle\}$ for system B, where $|a^\bot\rangle, |b^\bot\rangle$ are states orthogonal to $|a\rangle, |b\rangle$, respectively. Let $\lambda_1 = 1, \lambda_2 = 0$, then
+    \[
+    |a\rangle |b\rangle = \lambda_1 |a\rangle |b\rangle + \lambda_2 |a^\bot\rangle |b^\bot\rangle
+    \]
+    This shows $\{|a\rangle, |a^\bot \rangle\}$ of A and $\{|b\rangle, |b^\bot \rangle\}$ of B are Schmidt bases for $|a\rangle |b\rangle$. The Schmidt coefficients are $\lambda_1 = 1, \lambda_2 = 0$, and the Schmidt rank is $1$.
+
+    For state $|A_1\rangle =  \frac{1}{2} (|00\rangle + |01\rangle + |10\rangle + |11\rangle ) $, we consider two states $|\alpha\rangle$ of system A and $|\beta\rangle$ of system B where
+    \[
+   |\alpha \rangle =  \begin{bmatrix}
+        1 \\ 0
+    \end{bmatrix}, 
+    |\beta\rangle =  \begin{bmatrix}
+        \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}}
+    \end{bmatrix}
+    \]
+    Now let $\{ |\alpha \rangle, |\alpha^\bot \rangle \}$, $\{ |\beta \rangle, |\beta^\bot \rangle \}$ be orthonormal bases of system $A$ and $B$, respectively. $|\alpha^\bot \rangle, |\beta^\bot \rangle$ can be any vector orthogonal to $|\alpha \rangle, |\beta\rangle$, but for simplicity let's assume $|\alpha^\bot \rangle = \begin{bmatrix}0 \\ 1 \end{bmatrix}$, $|\beta^\bot \rangle = \begin{bmatrix}\frac{1}{\sqrt{2}} \\ \frac{-1}{\sqrt{2}} \end{bmatrix}$. Let $\lambda_1 = \lambda_2 = \frac{1}{\sqrt{2}}$, we have
+    \[
+    \lambda_1 |\alpha \rangle  |\beta \rangle + \lambda_2 |\alpha^\bot \rangle |\beta^\bot \rangle = 
+    \frac{1}{\sqrt{2}} \begin{bmatrix}
+        \frac{1}{\sqrt{2}} \\ \frac{1}{\sqrt{2}} \\ 0 \\ 0
+    \end{bmatrix}
+    + \frac{1}{\sqrt{2}} \begin{bmatrix}
+        0 \\ 0 \\ \frac{1}{\sqrt{2}} \\ \frac{-1}{\sqrt{2}}
+    \end{bmatrix} = \frac{1}{2} \begin{bmatrix}
+        1 \\ 1 \\ 1 \\ -1
+    \end{bmatrix} = |A_1\rangle
+    \]
+    This shows $\{ |\alpha \rangle, |\alpha^\bot \rangle \}$ of A and $\{ |\beta \rangle, |\beta^\bot \rangle \}$ of B are Schmidt bases for $|A_1\rangle$ with Schmidt coefficients $\lambda_1 = \lambda_2 = \frac{1}{\sqrt{2}}$ and Schmidt rank 2.
+
+    \item[(b)] Let $|{\sf +}\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle), |{\sf -}\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)$, we have
+    \[
+    |{\sf ++}\rangle = \frac{1}{2}(|00\rangle + |01\rangle + |10\rangle + |11\rangle) \quad |{\sf --}\rangle = \frac{1}{2}(|00\rangle - |01\rangle - |10\rangle + |11\rangle)
+    \]
+    Therefore,
+    \[
+    |{\sf ++}\rangle + |{\sf --}\rangle = \frac{1}{2}(|00\rangle + |11\rangle) + \frac{1}{2}(|00\rangle + |11\rangle) = |00\rangle + |11\rangle
+    \]
+
+    To show Schmidt bases are not unique, suppose $| \psi \rangle$ can be written by Schmidt decomposition as
+    \[
+    | \psi \rangle = \lambda |\alpha_1\rangle |\beta_1 \rangle + \lambda |\alpha_2\rangle |\beta_2 \rangle
+    \]
+    where $|\alpha_1 \rangle \bot |\alpha_2\rangle, |\beta_1 \rangle \bot |\beta_2\rangle$. Let $|\alpha_1\rangle = \begin{bmatrix} a_1 \\ a_2  \end{bmatrix}, |\alpha_2\rangle = \begin{bmatrix} a_2 \\ -a_1  \end{bmatrix}$. We may consider $|\psi\rangle$ to be
+    \[
+    |\psi\rangle = \lambda \begin{bmatrix}
+        a_1 |\beta_1\rangle + a_2 |\beta_2\rangle \\
+        a_2 |\beta_1\rangle - a_1 |\beta_2\rangle
+    \end{bmatrix}
+    \]
+    Note that $|\psi\rangle$ can be isomorphic to the representation
+    \[
+    \lambda \begin{bmatrix}
+        a_1 & a_2  \\
+        a_2 & -a_1
+    \end{bmatrix}
+     \begin{bmatrix}
+        \langle \beta_1 |  \\
+        \langle \beta_2 |
+    \end{bmatrix}
+    \]
+    where $\langle \beta_1 |, \langle \beta_2 |$ are row vectors. Now, for any 1-qubit unitary operation $U$, we have
+    \[
+        \lambda \begin{bmatrix}
+        a_1 & a_2  \\
+        a_2 & -a_1
+    \end{bmatrix}
+     \begin{bmatrix}
+        \langle \beta_1 |  \\
+        \langle \beta_2 |
+    \end{bmatrix} = \lambda \left(\begin{bmatrix}
+        a_1 & a_2  \\
+        a_2 & -a_1
+    \end{bmatrix} U\right) \left( U^*
+     \begin{bmatrix}
+        \langle \beta_1 |  \\
+        \langle \beta_2 |
+    \end{bmatrix} \right)
+    \]
+    The column vectors and row vectors of
+    \[
+    A := \begin{bmatrix}
+        a_1 & a_2  \\
+        a_2 & -a_1
+    \end{bmatrix} U \qquad B := U^*
+     \begin{bmatrix}
+        \langle \beta_1 |  \\
+        \langle \beta_2 |
+    \end{bmatrix}
+    \]
+    ,respectively, form another Schmidt bases. To see this, consider
+    \[
+    A^* A = U^* \begin{bmatrix}
+    \langle \alpha_1 | \alpha_1 \rangle & \langle \alpha_1 | \alpha_2 \rangle \\
+    \langle \alpha_2 | \alpha_1 \rangle & \langle \alpha_2 | \alpha_2 \rangle
+    \end{bmatrix}  U = U^*U = I
+    \]
+    \[
+    BB^* = U^* \begin{bmatrix}
+    \langle \beta_1 | \beta_1 \rangle & \langle \beta_1 | \beta_2 \rangle \\
+    \langle \beta_2 | \beta_1 \rangle & \langle \beta_2 | \beta_2 \rangle
+    \end{bmatrix}  U = U^*U = I
+    \]
+    Hence column vectors of $A$ and row vectors of $B$ are valid quantum states.
+
+    \item[(c)] Given any $|\psi\rangle = \sum_{i,j} a_{ij} |ij\rangle$. We consider the isomorphism $\Psi$ where
+    \[
+    \Psi : \quad |\psi\rangle = \begin{bmatrix}
+        a_{11} \\ a_{12} \\ a_{21} \\ a_{22}
+    \end{bmatrix} \longrightarrow A_{\psi} := \begin{bmatrix}
+        a_{11} & a_{12} \\ a_{21} & a_{22}
+    \end{bmatrix}
+    \]
+    We may apply the singular value decomposition on matrix $A_{\psi}$
+    \[
+    A_{\psi} = U \Sigma V^*
+    \]
+    where $U, V$ are unitary and $\Sigma$ is an diagonal matrix with entries non-negative real numbers. Let
+    \[
+    U = \begin{bmatrix}
+        |u_1\rangle & |u_2\rangle
+    \end{bmatrix} \quad
+    V = \begin{bmatrix}
+        |v_1\rangle & |v_2\rangle
+    \end{bmatrix} \quad
+    \Sigma = \begin{bmatrix}
+        \lambda_1 & 0 \\ 0 & \lambda_2
+    \end{bmatrix}
+    \]
+    We have
+    \[
+    A_{\psi} = U \Sigma V^* = \begin{bmatrix}
+        |u_1\rangle & |u_2\rangle
+    \end{bmatrix} \begin{bmatrix}
+        \lambda_1 & 0 \\ 0 & \lambda_2
+    \end{bmatrix} \begin{bmatrix}
+        \langle v_1| \\ \langle v_2|
+    \end{bmatrix} = \lambda_1 |u_1 \rangle \langle v_1 | + \lambda_2 |u_2 \rangle \langle v_2 |
+    \]
+    Note that this implies (by the inverse of isomorphism $\Psi$),
+    \[
+    \psi = \lambda_1 \Psi^{-1}(|u_1 \rangle \langle v_1 |) + \lambda_2 \Psi^{-1}(|u_2 \rangle \langle v_2 |) = \lambda_1 |u_1\rangle \bar{(|v_1 \rangle)} + \lambda_2 |u_2\rangle \bar{|v_2 \rangle}
+    \]
+    where $\bar{|v\rangle}$ is the state with each entry the complex conjugate of the corresponding entry of $|v\rangle$.
+
+    \item[(d)] The unitary operation $U$ which under basis $|0\rangle, |1\rangle$ can be written as
+    \[
+    U = \begin{bmatrix}
+        a & c \\ b & d
+    \end{bmatrix}
+    \]
+    follows $U |0\rangle = |\alpha_0\rangle$ and $U |1\rangle = |\alpha_1\rangle$.
+    
+    Let $|\psi \rangle$ be any 2-qubit state. It is sufficient to show that we can construct $|0\rangle |0\rangle$ by applying a sequence of unitary operations and at most one controlled-NOT gate on $|\psi \rangle$, as all unitary operations are invertible and the controlled-NOT gate is its inverse. By Schmidt decomposition,
+    \[
+    |\psi\rangle = \lambda_0 |\alpha_0\rangle |\beta_0\rangle + \lambda_1 |\alpha_1\rangle |\beta_1\rangle
+    \]
+    Note that there exists some 1-qubit $U_\alpha$ such that $U_\alpha |i\rangle = |\alpha_i\rangle$. Similarly there exists some 1-qubit $U_\beta$ such that $U_\beta |i\rangle = |\beta_i\rangle$. Now, by applying $U_\alpha^{-1} \otimes U_\beta^{-1}$ on $|\psi\rangle$,
+    \[
+    U_\alpha^{-1} \otimes U_\beta^{-1} |\psi\rangle = \lambda_0 |0\rangle |0\rangle + \lambda_1 |1\rangle |1\rangle
+    \]
+    Now we apply a controlled-NOT gate $CX$,
+    \[
+    CX( U_\alpha^{-1} \otimes U_\beta^{-1} |\psi\rangle ) = \lambda_0 |0\rangle |0\rangle + \lambda_1 |1\rangle |0\rangle
+    \]
+    Note that this is equal to
+    \[
+    (\lambda_0 |0\rangle + \lambda_1 |1\rangle) \otimes |0\rangle
+    \]
+    Finally we may use an 1-qubit $U$ to make
+    \[
+    U (\lambda_0 |0\rangle + \lambda_1 |1\rangle) = |0\rangle \implies (U\otimes I) CX( U_\alpha^{-1} \otimes U_\beta^{-1} |\psi\rangle ) = |0\rangle |0\rangle
+    \]
+    The inverse of $(U\otimes I) CX( U_\alpha^{-1} \otimes U_\beta^{-1} |\psi\rangle ) $ can be applied on $|0\rangle |0\rangle$ to construct $|\psi\rangle$.
+
+    For unentangled state, the controlled-NOT gate is not required. Let $|\psi\rangle = |\alpha\rangle |\beta \rangle $ be any unentangled state for some $|\alpha \rangle$ and $|\beta \rangle$. Let $U_\alpha, U_\beta$ be two 1-qubit unitary operations where $U_\alpha |0\rangle = |\alpha\rangle, U_\beta |0\rangle = |\beta\rangle$. Then
+    \[
+    (U_\alpha \otimes U_\beta) |0\rangle |0\rangle = U_\alpha |0\rangle \otimes U_\beta |0\rangle = |\alpha\rangle |\beta\rangle = |\psi\rangle
+    \]
+    
+    \item[(e)] Let $|\psi\rangle$ be a 3-qubit state
+    \[
+    |\psi\rangle = \frac{1}{\sqrt{2}}|0\rangle |\phi_0\rangle - \frac{1}{\sqrt{2}}|1\rangle |\phi_1\rangle,\quad |\phi_0\rangle = \frac{1}{\sqrt{2}}( |00\rangle + |11\rangle, \, |\phi_1\rangle = \frac{1}{\sqrt{2}}( |01\rangle + |10\rangle )
+    \]
+    Note that this is a valid Schmidt form of $|\psi\rangle$, and $|\phi_0\rangle, |\phi_1\rangle$ are entangled 2-qubit states Suppose for contradiction that $|\psi\rangle$ can be decomposed as
+    \[
+    |\psi\rangle = \lambda_1 |\alpha_1\rangle |\beta_1 \rangle |\gamma_1 \rangle + \lambda_2 |\alpha_2\rangle |\beta_2 \rangle |\gamma_2 \rangle
+    \]
+    Let $|\delta_1\rangle = |\beta_1 \rangle |\gamma_1 \rangle, |\delta_2\rangle = |\beta_2 \rangle |\gamma_2 \rangle$. We can also write $|\psi\rangle$ as
+    \[
+    |\psi \rangle = \lambda_1 |\alpha_1\rangle |\delta_1 \rangle + \lambda_2 |\alpha_2\rangle |\delta_2 \rangle
+    \]
+    Since Schmidt bases are unique for different Schmidt coefficients, we have
+    \[
+    |\delta_1\rangle = |\phi_0\rangle \text{ or } |\phi_1\rangle \quad \text{ and } \quad |\delta_2\rangle = |\phi_0\rangle \text{ or } |\phi_1\rangle
+    \]
+    But this contradicts that both $|\phi_0\rangle$ and $|\phi_1\rangle$ are entangled states.
+    
+    
+\end{enumerate}
+
+\item[5.] \textbf{No-deleting principle}
+
+\begin{enumerate}
+    \item [(a)] Let $U$ be the operation such that
+    \[
+    U |\psi_0\rangle |\psi_0\rangle |M\rangle = |\psi_0\rangle |0\rangle |M_0\rangle \quad     U |\psi_1\rangle |\psi_1\rangle |M\rangle = |\psi_1\rangle |0\rangle |M_1\rangle
+    \]
+    It turns out that
+    \[
+    U^* |\psi_0\rangle |0\rangle |M_0\rangle = |\psi_0\rangle |\psi_0\rangle |M\rangle  \quad  U^* |\psi_1\rangle |0\rangle |M_1\rangle = |\psi_1\rangle |\psi_1\rangle |M\rangle
+    \]
+    If $U^* = I \otimes U'$, then $U'|0\rangle |M_i\rangle = |\psi_i\rangle |M\rangle$.
+
+    \item [(b)] Let
+    \[
+    |\psi\rangle = a|0\rangle + b|1\rangle
+    \]
+    Then by measuring the second qubit with basis $|0\rangle$, one has probability
+    \[
+    (\langle \psi_i | (\bar{a} \langle 0 | + \bar{b} \langle 1 |) \langle M | ) I \otimes |0\rangle \langle 0 | \otimes I (|\psi_i \rangle  (a | 0 \rangle + b | 1 \rangle) |M\rangle) = |a|^2
+    \]
+    to get the collapsed state
+    \[
+    \frac{I \otimes |0\rangle \langle 0 | \otimes I (|\psi_i \rangle  (a | 0 \rangle + b | 1 \rangle) |M\rangle)}{\| I \otimes |0\rangle \langle 0 | \otimes I (|\psi_i \rangle  (a | 0 \rangle + b | 1 \rangle) |M\rangle) \|} = |\psi_i \rangle |0\rangle |M\rangle
+    \]
+
+    \item [(c)] Consider we use state $|0\rangle$ to encode bit $0$ and $|1\rangle$ to encode bit $1$. Now consider the controlled-NOT gate $CX$, we have
+    \[
+    CX |0\rangle |0\rangle = |0\rangle |0\rangle \quad CX |1\rangle |1\rangle = |1\rangle |0\rangle
+    \]
+    This shows that one can use $CX$ to delete the information of the second qubit, and $CX$ is a reversible Boolean operation.
+\end{enumerate}
+
+
+\item[6.] \textbf{Ambiguous discrimination}
+
+\begin{enumerate}
+    \item [(a)]
+    \[
+    P_S = \frac{1}{N} \sum_{k=1}^N Pr_k = \frac{1}{N} \sum_{k=1}^N \langle \alpha_k | \langle A | \Pi_k | \alpha_k \rangle | A \rangle
+    \]
+
+    \item [(b)]
+    Consider that
+    \[
+    NP_S = \sum_{k=1}^N \langle \alpha_k | \langle A | \Pi_k | \alpha_k \rangle | A \rangle =  \sum_{k=1}^N \langle \alpha_k| \, ( (I_d \otimes \langle A|) \Pi_k (I_d \otimes |A\rangle) )\, |\alpha_k \rangle
+    \]
+    where $I_d$ is the identity of $d$ dimension. Let
+    \[
+    \Pi_k' = (I_d \otimes \langle A|) \Pi_k (I_d \otimes |A\rangle)
+    \]
+    Note that $\Pi_k'$ is positive semi-definite, so $\langle \psi | \Pi_k' |\psi \rangle \leq Tr[\Pi_k']$ for all $\langle \psi | \psi \rangle = 1$. Now
+    \[
+    \sum_{k=1}^N \langle \alpha_k | \langle A | \Pi_k | \alpha_k \rangle | A \rangle = \sum_{k=1}^N \langle \alpha_k | \Pi_k' |\alpha_k \rangle \leq \sum_{k=1}^N Tr[\Pi_k'] = Tr[\sum_{k=1}^N \Pi_k'] = d \implies P_S \leq \frac{d}{N}
+    \]
+    This is because
+    \[
+    \sum_{k=1}^N \Pi_k' = \sum_{k=1}^N (I_d \otimes \langle A|) \Pi_k (I_d \otimes |A\rangle) = (I_d \otimes \langle A|) \sum_{k=1}^N \Pi_k (I_d \otimes |A\rangle) = (I_d \otimes \langle A| A \rangle) = I_d
+    \]
+    
+    \item[(c)]
+    Let $\{|\alpha_k\rangle\}$ be states such that
+    \[
+    |\alpha_i\rangle \bot |\alpha_j\rangle \quad \forall i\neq j, \, i,j \leq d
+    \]
+    Since $|\alpha_k\rangle$ is $d$-dimensional, one can just take any basis for $|\alpha_1\rangle, \cdots,|\alpha_d\rangle$. Now let
+    \[
+    \Pi_k = \begin{cases}
+    |\alpha_k\rangle \langle \alpha_k| \otimes |A\rangle \langle A | & \forall k \leq d \\
+    I - \sum_{j=1}^d\Pi_j = I - I \otimes |A\rangle \langle A | & k = d+1 \\
+    O & \forall k > d
+    \end{cases}
+    \]
+    This forms valid projective measurements. $\Pi_k^2 = \Pi_k = \Pi_k^*$ and $\sum_{k=1}^N \Pi_k = I$. But then
+    \begin{align*}
+    P_S = \frac{1}{N} \sum_{k=1}^N \langle \alpha_k | \langle A | \Pi_k | \alpha_k \rangle | A \rangle 
+    &= \frac{1}{N} (\sum_{k=1}^d \langle \alpha_k | \langle A | \, (|\alpha_k\rangle \langle \alpha_k| \otimes |A\rangle \langle A |)\, | \alpha_k \rangle | A \rangle \\
+    &\quad +  \sum_{k=d+1}^N \langle \alpha_k | \langle A | \, (I - I \otimes |A\rangle\langle A|)\, | \alpha_k \rangle | A \rangle )\\
+    &= \frac{1}{N} \sum_{k=1}^d \langle \alpha_k \langle A| |\alpha_k \rangle |A \rangle + (N-d) - (N-d) \\
+    &= \frac{d}{N}
+    \end{align*}
+
+
+    
+\end{enumerate}
+
+
+\end{enumerate}
+
+
+%-------------------
+%% Reference List
+\pagebreak
+
+\nocite{*}
+\printbibliography
+
+
+\end{document}
