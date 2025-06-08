@@ -1,0 +1,96 @@
+%%%%%%%%%%%%%%%%%%%%
+
+% Project Name: Spectral Theorem
+% File: header.tex
+% Author: Keng-Yu Chen
+
+%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper]{article}
+\usepackage[a4paper, total={6in, 10in}]{geometry}
+% \usepackage{showframe}
+\usepackage{mathrsfs}
+\usepackage{color}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage{stmaryrd}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{makecell}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+\usepackage{thmtools}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage[bottom]{footmisc}
+\hypersetup{colorlinks=true}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\usepackage[
+    lambda,
+    advantage,
+    operators,
+    sets,
+    adversary,
+    landau,
+    probability,
+    notions,
+    logic,
+    ff,
+    mm,
+    primitives,
+    events,
+    complexity,
+    oracles,
+    asymptotics,
+    keys
+]{cryptocode}
+
+% Set Self-defined Words
+\renewcommand{\verify}{\mathsf{Vrfy}}
+\newcommand{\Adv}{\mathbf{Adv}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+
+\makeatletter
+\newcommand{\vast}{\bBigg@{4}}
+\newcommand{\Vast}{\bBigg@{5}}
+\makeatother
+
+% Convert block[name] into a theorem-like format
+\newtheorem{theorem}{Theorem}
+\newtheorem*{theorem*}{Theorem}
+
+% \theoremstyle{definition}
+% \newtheorem{definition}{Definition}
+
+% \theoremstyle{definition}
+% \newtheorem{assumption}{Assumption}
+% for llncs:
+% \spnewtheorem{assumption}{Assumption}{\bfseries}{\itshape}
+
+% \theoremstyle{plain}
+% \newtheorem{corollary}{Corollary}
+
+% Add Referemces
+\usepackage[
+	backend=biber,
+	style=alphabetic,
+	sorting=ynt
+]{biblatex}
+\addbibresource{reference.bib}
+
+\title{\textbf{Spectral Theorem}}
+\author{Keng-Yu Chen}
+\date{June 9, 2025}

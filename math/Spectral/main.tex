@@ -1,0 +1,98 @@
+%%%%%%%%%%%%%%%%%%%%
+
+% Project Name: Spectral Theorem
+% File: main.tex
+% Author: Keng-Yu Chen
+
+%%%%%%%%%%%%%%%%%%%%
+
+\input{header}
+
+\begin{document}
+\maketitle
+
+\begin{theorem*}[Spectral Theorem]
+	Every real symmetric matrix can be diagonalized by an orthonormal basis\footnote{The theorem and the proofs all hold for \emph{self-adjoint} matrices, a more general class of complex matrices.}.
+\end{theorem*}
+
+We prove this theorem through the following steps.
+
+In the following, we consider a finite $n$-dimensional vector space $V$ and a real symmetric matrix $A$ for a linear transformation $T$ on $V$.
+
+\begin{theorem}
+\label{thm-1}
+	Eigenvalues of real symmetric matrices are real.
+\end{theorem}
+
+\begin{proof}
+
+Let $A$ be a real symmetric matrix. For any eigenvector $v \in V$ of $A$ with corresponding eigenvalue $\lambda$,
+\begin{align*}
+	\langle Av,v \rangle &= \langle \lambda v,v \rangle = \lambda \langle v, v \rangle \\
+	&=\langle v, A^*v\rangle = \langle v, Av \rangle = \langle v,\lambda v \rangle = \bar \lambda \langle v,v \rangle
+\end{align*}
+Therefore, $\lambda = \bar \lambda$, $\lambda$ is real.
+
+Note that if $A$ is a real symmetric matrix, then its eigenvectors are also real since they are in the kernel of $A-\lambda I$ for some real $\lambda$.
+
+\end{proof}
+
+\begin{theorem}
+	Eigenvectors to distinct eigenvalues of real symmetric matrices are orthogonal
+\end{theorem}
+
+\begin{proof}
+
+	Let $v, w$ be two eigenvectors of $A$, associated with real eigenvalues $\lambda,\mu$.
+\begin{align*}
+	\langle Av,w \rangle &= \lambda \langle v,w \rangle \\
+	&= \langle v,A^*w \rangle = \langle v,Aw \rangle = \langle v,\mu w \rangle = \bar \mu \langle v,w \rangle
+\end{align*}
+Therefore, either $\lambda = \bar \mu = \mu$ or $\langle v,w\rangle = 0$.
+
+\end{proof}
+
+
+\begin{theorem}
+	Let $W$ be a $T$-invariant space in $V$, then its orthogonal complement $W^\perp$ is also a $T$-invariant space.
+\end{theorem}
+
+\begin{proof}
+
+For any $x \in W, y \in W^\perp$,
+\[
+	\langle x, Ay\rangle = \langle A^*x, y \rangle = \langle Ax, y \rangle = \lambda \langle x,y \rangle = 0,
+\]
+which shows $Ay$ also lies in $W^\perp$.
+
+Note that this implies for any eigenvector $v$ of a real symmetric $A$ and $w \perp v$, $Aw \perp v$.
+
+\end{proof}
+
+Now we can prove the spectral theorem.
+
+\begin{proof}
+	
+	We prove the theorem by induction. The case $n=1$ is trivial. For a general finite $n$-dimensional vector space $V$, by the \emph{fundamental theorem of algebra}, there must exist a root of the characteristic polynomial, which is an eigenvalue. By Theorem \ref{thm-1}, it is real, so we can find a 1-unit eigenvector $v$ with a real eigenvalue $\lambda$.
+
+Let $W = \text{span}\{v\}$, $W^\perp$ be the orthogonal complement of $W$. Since $W^\perp$ is $n-1$-dimensional, by induction, we can find an orthonormal basis $\mathcal{\tilde B}$ for $W^\perp$. As $W$ and $W^\perp$ are both $T$-invariant, under the basis $\mathcal{B} = \{v\} \cup \mathcal{\tilde B}$, $T$ corresponds to a block matrix,
+\[	
+	A \sim \begin{bmatrix} 
+		\lambda & 0 \\
+		0 & \tilde A
+	\end{bmatrix},
+\]
+where $\tilde A$ is the matrix representation of $T$ under the basis $\tilde B$, restricted on the space $W^\perp$, and $\tilde A$ is a diagonal matrix. Moreover, since $W^\perp$ is the orthogonal complement of $W=\{v\}$, $v$ is orthogonal to every vector in $W^\perp$, including all the basis vectors $\mathcal{\tilde B}$. Hence, $\mathcal{B}$ is an orthonormal basis for $V$.
+
+\end{proof}
+
+
+
+%-------------------
+%% Reference List
+\pagebreak
+
+\nocite{*}
+\printbibliography
+
+\end{document}
