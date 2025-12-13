@@ -1,0 +1,127 @@
+%%%%%%%%%%%%%%%%%%%%
+
+% Project Name:
+% File: main.tex
+% Author: Keng-Yu Chen
+
+%%%%%%%%%%%%%%%%%%%%
+
+\input{header}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+In this note, we study the famous \textit{birthday problem} and its generalization.
+
+The classical birthday problem can be stated as follows:
+\begin{center}
+\textit{
+Given $q$ people, what is the chance that there exist some two of them having the same birthdays?
+}
+\end{center}
+The answer is
+\[
+	1 - 1 \times \frac{364}{365} \times \frac{363}{365} \times \cdots \times \frac{365-q+1}{365}.
+\]
+
+Extending from the birthday scenario, we want to ask:
+\begin{problem}[Generalized Birthday Problem]
+Given $q$ balls, $N$ bins, where $N \geq q$. Throw these $q$ balls uniformly and independently to the $N$ bins. What is the probability that a bin contains more than 1 ball?
+\end{problem}
+The answer is
+\[
+	1 - \frac{N!}{N^q (N-q)!} = 1 - \frac{N-1}{N} \cdots \frac{N-q+1}{N}.
+\]
+Call this number $C(N,q)$.
+
+This problem has wide applications in computer science and cryptography. For example, it is used to analyze the collision resistance of hash functions. In general, to achieve $\lambda$-bit security against collision attacks, a hash function needs to have an output length of at least $2\lambda$ bits, since the attacker can find a collision with constant probability after hashing about $2^{\lambda}$ random inputs (by setting $q = 2^{\lambda}$ and $N = 2^{2\lambda}$ in the above problem).
+
+\section{Main Theorem}
+
+\begin{theorem}[Bounds on $C(N,q)$]
+
+Let $C(N,q) = 1 - \frac{N!}{N^q (N-q)!}$. Then 
+\[
+	1 - e^{-\frac{q(q-1)}{2N}} \leq C(N, q) \leq \frac{q(q-1)}{2N}
+\]
+In particular, if $q \geq \sqrt{2N}$, then $C(N, q) \geq 0.3 \cdot \frac{q(q-1)}{N}$.
+
+\end{theorem}
+
+\begin{proof}
+
+Let $C_i$ be the event that the $i$-th ball collides with some previous one. Then
+\[
+	\Pr[C_i] \leq \frac{i-1}{N}
+\]
+We can derive the upper bound by
+\begin{align*}
+C(N,q) &= \Pr[C_1 \vee C_2 \vee \cdots C_q] \\
+&\leq \Pr[C_1] + \Pr[C_2] + \cdots \Pr[C_q] \\
+& \leq \frac{0}{N} + \frac{1}{N} + \cdots + \frac{q}{N} \\
+&= \frac{q(q-1)}{2N}.
+\end{align*}
+
+For lower bound, let $D_i$ be the event that there is no collision after we throw the $i$-th ball. If $D_i$ is true, then the probability that the $i+1$-th ball does not collide any previous ball is
+\[
+	\Pr[D_{i+1} \mid D_i] = \frac{N-i}{N}
+\]
+since the previous $i$ balls occupy exactly $i$ distinct bins in this case. Now,
+
+\begin{align*}
+1 - C(N,q) =  \Pr[D_q] = \Pr[D_q \wedge D_{q-1} \wedge \cdots D_{1}] = \prod_{i=1}^{q-1} \Pr[D_{i+1} \mid D_i] = \prod_{i=1}^{q-1} (1 - \frac{i}{N})
+\end{align*}
+By $1-x \leq e^{-x}$, we have
+\[
+	1 - C(N,q) \leq \exp\left(-\frac{1}{N} - \frac{2}{N} - \cdots - \frac{q-1}{N} \right) \leq \exp\left(-\frac{q(q-1)}{2N}\right)
+\]
+Hence,
+\[
+	C(N,q) \geq  1- \exp\left( -\frac{q(q-1)}{2N} \right)
+\]
+
+Finally, if $q \leq \sqrt{2N}$, then $\frac{q(q-1)}{2N} \leq 1$, and by $1-e^{-x} \geq (1-e^{-1})x$ for all $x \in [0,1]$, we further have
+\[
+	C(N,q) \geq (1-\frac{1}{e}) \frac{q(q-1)}{2N} \geq 0.3 \cdot \frac{q(q-1)}{2N}
+\]
+
+\end{proof}
+
+
+\begin{theorem}[Asymptotic Behavior of $C(N,q)$]
+	Let $C(N,q) = 1 - \frac{N!}{N^q (N-q)!}$. If $q = o(N)$, then $C(N,q) \to 1 - e^{-\frac{q^2}{2N} + o(1)}$. In particular, if $q = \theta \cdot \sqrt{N}$ for some constant $\theta$, then $C(N,q) \to 1 - e^{-\frac{\theta^2}{2} }$.
+\end{theorem}
+
+\begin{proof}
+
+Recall the Stirling Approximation,
+\[
+	n! \sim_{n \to +\infty} \sqrt{2\pi n} e^{-n} n^n.
+\]
+
+If $q = o(N)$, then by Stirling Approximation,
+\begin{align*}
+1 - C(N,q) &= \frac{N!}{N^q (N-q)!} \\
+&= \frac{\sqrt{2\pi N} e^{-N} N^N}{N^q \sqrt{2\pi (N-q)} e^{-(N-q)} (N-q)^{N-q}} \\
+&\sim e^{-q} \left( \frac{ N}{N-q} \right)^{N-q} \\
+&= e^{-q} \cdot (1 - \frac{q}{N})^{q-N} = \exp(-q + (q-N)\log (1 - \frac{q}{N})).
+\end{align*}
+By $\log(1 - \epsilon) = -\epsilon - \frac{\epsilon^2}{2} + o(\epsilon^2)$,
+
+\[
+1 - C(N, q) \sim \exp(-q + (q-N)(-\frac{q}{N} - \frac{q^2}{2N^2} + o(\frac{q^2}{N^2}))) = \exp(-\frac{q^2}{2N} + o(1))
+\]
+
+\end{proof}
+
+
+%-------------------
+%% Reference List
+\pagebreak
+
+\nocite{*}
+\printbibliography
+
+\end{document}

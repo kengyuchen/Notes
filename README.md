@@ -12,3 +12,8 @@ This repository includes notes of various topics in mathematics.
 
 ## Abstract Algebra
 1. [Finite Fields](math/Finite%20Fields/main.pdf)
+
+
+# Cryptography
+
+1. [Birthday Problem](crypto/Birthday/birthday.pdf)
