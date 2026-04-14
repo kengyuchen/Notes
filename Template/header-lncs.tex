@@ -7,11 +7,12 @@
 %%%%%%%%%%%%%%%%%%%%
 
 \documentclass[a4paper, runningheads]{llncs}
-\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 
 % Include Packages
 \usepackage{mathrsfs}
-\usepackage{color}
+\usepackage{xcolor}
+\let\vec\relax
 \usepackage{amsmath,amssymb}
 \usepackage{pifont}
 \newcommand{\xmark}{\ding{55}}
@@ -19,20 +20,27 @@
 \usepackage{bbm}
 \usepackage{stmaryrd}
 \usepackage{graphicx}
-\usepackage{multicol}
-\usepackage{multirow}
-\usepackage{booktabs}
-\usepackage{makecell}
+\usepackage{booktabs, tabularx, multirow, makecell}
+\newcolumntype{C}{>{\centering\arraybackslash}X} 
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\usepackage{array}
 \usepackage{wrapfig}
+% \usepackage[caption=false]{subfig}
 \usepackage{subcaption}
 \usepackage{thmtools}
+\usepackage{soul}
+
+% Standard LNCS Hyperref Setup
 \usepackage{hyperref}
+\renewcommand\UrlFont{\color{blue}\rmfamily}
+\urlstyle{rm}
 % \hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,filecolor=magenta,urlcolor=blue} % set color for hyperlinks
 % set pdf headers for sections
 \usepackage{bookmark} 
 \bookmarksetup{
 	depth=3,
 }
+\usepackage{todonotes}
 
 \usepackage{algorithm}
 \usepackage{algpseudocode}
@@ -103,13 +111,15 @@
 \pgfdeclarelayer{foreground layer}
 \pgfsetlayers{background layer,main,foreground layer}
 
-% Add Referemces
-\usepackage[
-	backend=biber,
-	style=alphabetic,
-	sorting=ynt
-]{biblatex}
-\addbibresource{reference.bib}
+% Add Referemces for biblatex
+% For standard LNCS, remove biblatex and use \bibliographystyle{splncs04} and \bibliography{reference} in the main file.
+
+% \usepackage[
+% 	backend=biber,
+% 	style=alphabetic,
+% 	sorting=ynt
+% ]{biblatex}
+% \addbibresource{reference.bib}
 
 \title{\textbf{LNCS Template Title}\\Template number}
 \author{Keng-Yu Chen}

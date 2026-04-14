@@ -11,6 +11,8 @@
 \begin{document}
 \maketitle
 
+Cite a paper \cite{TCHES:CC24}.
+
 \section{INC-CPA Game}
 
 Use \texttt{algorithm} and \texttt{algpseudocode}.
@@ -66,10 +68,15 @@ With a Figure environment:
 \end{figure}
 
 %-------------------
-%% Reference List
+%% References (For BibLaTeX)
 \pagebreak
 
-\nocite{*}
-\printbibliography
+% \nocite{*}
+% \printbibliography
 
+% References (For LNCS)
+% Remove biblatex in header-lncs.tex
+
+\bibliographystyle{splncs04}
+\bibliography{reference}
 \end{document}
