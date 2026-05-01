@@ -32,7 +32,7 @@ Use \texttt{algorithm} and \texttt{algpseudocode}.
         \State $c \sample \enc(\pk, m_b)$
 
         \State $b^\prime \gets \adv(\pk, c)$
-        \State \Return $\mathbbm{1}_{b = b^\prime}$
+        \State \Return $\mathds{1}_{b = b^\prime}$
     \end{algorithmic}
     \end{algorithm}
     \end{minipage}
@@ -47,7 +47,7 @@ Or use \texttt{\textbackslash procedureblock}
     (m_0, m_1) \sample \adv(\secparam, \pk, c) \\
     c \sample \enc(\pk, m_b) \\
     b^\prime \gets \adv(\secparam, \pk, c) \\
-    \pcreturn \mathbbm{1}_{b = b'}
+    \pcreturn \mathds{1}_{b = b'}
 }
 
 With a Figure environment:
@@ -59,7 +59,7 @@ With a Figure environment:
         (m_0, m_1) \sample \adv(\secparam, \pk, c) \\
         c \sample \enc(\pk, m_b) \\
         b^\prime \gets \adv(\secparam, \pk, c) \\
-        \pcreturn \mathbbm{1}_{b = b'}
+        \pcreturn \mathds{1}_{b = b'}
     }
     \caption{\indcpa Game}
     \label{fig:ind-cpa}
