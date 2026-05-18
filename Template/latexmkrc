@@ -1,1 +1,1 @@
-$pdflatex='pdflatex %O main ';
+$pdflatex='pdflatex %O main-lncs ';
