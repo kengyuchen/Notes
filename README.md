@@ -17,3 +17,4 @@ This repository includes notes of various topics in mathematics.
 # Cryptography
 
 1. [Birthday Problem](crypto/Birthday/birthday.pdf)
+2. [Pairing](crypto/pairing/main.pdf)

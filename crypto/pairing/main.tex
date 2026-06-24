@@ -1,0 +1,528 @@
+%%%%%%%%%%%%%%%%%%%%
+
+% Project Name: Pairing
+% File: main.tex
+% Author: Keng-Yu Chen
+
+%%%%%%%%%%%%%%%%%%%%
+
+\input{header}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+	This note complements the work \cite{costello2012pairings}, which provides a detailed introduction to the Weil pairing and Tate pairing, by more details and proofs omitted in the original work.
+\end{abstract}
+
+\section{Preliminaries and Assumptions}
+
+In this work, we assume the follwing:
+\begin{itemize}
+	\item $E = E(\overline{\mathbb{F}_q})$ is an elliptic curve defined over $\overline{\mathbb{F}_{q}}$, where $q$ is a prime number $> 3$. $E(K)$ specifies the set of points on $E$ defined over a subfield $K$ of $\overline{\mathbb{F}_q}$.
+		
+	\item $r$ is a prime number such that $r \nmid q$ and $r \mid \#E(\mathbb{F}_q)$. We also assume $r^2 \nmid \#E(\mathbb{F}_q)$. We write $r \| \#E(\mathbb{F}_q)$ if $r \mid \#E(\mathbb{F}_q)$ but $r^2 \nmid \#E(\mathbb{F}_q)$. $E[r]$ is the $r$-torsion subgroup of $E$, which is defined as $E[r] = \{P \in E: [r]P = \mathcal{O}\}$. Since $r$ is coprime to $q$, we have $E[r] \cong \Z_r \times \Z_r$.
+	\item $k$ is the embedding degree of $E$ with respect to $r$, i.e., $k$ is the smallest positive integer such that $r \mid q^k - 1$. Since $r \| \#E(\mathbb{F}_q)$, we have the embedding degree $k > 1$.
+	\item For a function $f$ on $E$, we denote the divisor of $f$ as $(f)$.
+	\item $\text{Div}_{\overline{\mathbb{F}_q}}(E)$ is the group of divisors on $E(\overline{\mathbb{F}_q})$. $\text{Div}^0(E)$ is the group of degree-zero divisors in $\text{Div}(E)$. $\text{Prin}(E)$ is the group of principal divisors in $\text{Div}(E)$. Note that $\text{Prin}(E) \subset \text{Div}^0(E) \subset \text{Div}(E)$. We define the divisor class group, or Picard group of $E$ by
+	\[
+		\text{Pic}^{0}(E) = \text{Div}^0(E) / \text{Prin}(E)
+	\]
+	\item Two divisors $D_1$ and $D_2$ are called equivalent, written as $D_1 \sim D_2$, if $D_1 = D_2 + (f)$ for some function $f$.
+	\item Given $m \in \Z$ and $P \in E$, define the function $f_{m, P}$ as the function whose divisor is $(f_{m,P}) = m(P) - ([m]P) - (m-1)(\mathcal{O})$.
+	\begin{itemize}
+		\item For $m = 0, 1$, $(f_{m,P})$ is the zero divisor.
+		\item For $P \in E[r]$, $(f_{r,P}) = r(P) - r(\mathcal{O})$.
+	\end{itemize}
+	Note that we have
+	\[
+		(f_{m+1,P}) - (f_{m, P}) = (P) + ([m]P) - ([m+1]P) - (\mathcal{O}) = (\frac{\ell_{[m]P, P}}{v_{[m+1]P}})
+	\]
+	where
+	\begin{itemize}
+		\item $\ell_{[m]P, P}$: the sloped line connecting $P$ and $[m]P$. $(\ell_{[m]P, P}) = (P) + ([m]P) + ([m+1]P) - 3 (\mathcal{O})$.
+		\item $v_{[m+1]P}$: the vertical line passing through $[m+1]P$. $(v_{[m+1]P}) = 2([m+1])P - 2 (\mathcal{O})$
+	\end{itemize}
+	\item $\mu_r$ is the group of $r$-th roots of unity in $\overline{\mathbb{F}_q}$, i.e., $\mu_r = \{x \in \overline{\mathbb{F}_q}^* : x^r = 1\}$.
+\end{itemize}
+
+We recall a few important definitions and theorems.
+
+\begin{theorem}[Weil Reciprocity]
+	Let $f$ nad $g$ be non-zero functions on a curve such that $(f)$ and $(g)$ have disjoint supports. Then $f((g)) = g((f))$.
+\end{theorem}
+
+
+\begin{theorem}
+\label{thm:torsion_group}
+If $E$ is defined over a field with characteristic $0$ or prime to $r$, then
+\[
+	E[r] \cong \Z_r \times \Z_r
+\]
+\end{theorem}
+
+\begin{corollary}
+If $E$ is defined over a field with characteristic $0$ or prime to $r$, then
+\begin{itemize}
+	\item $\#E[r] = r^2$.
+	\item $E[r]$ is a $\mathbb{F}_r$-vector space of dimension 2.
+	\item If $r$ is a prime number, $E[r]$ has $r+1$ cyclic subgroups of order $r$
+\end{itemize}
+\end{corollary}
+
+\begin{proof}
+	The first two properties are straightforward from Theorem \ref{thm:torsion_group}. For the last property, since $r$ is prime, all subgroups of order $r$ don’t share any non-zero element. Indeed, if two subgroups share any non-zero elements $g$, then both subgroups are $\langle g\rangle$. In addition, for any subgroup or order $r$, any element is a generator. $r^2 - 1 = (r-1)(r+1)$, so there are $r+1$ different subgroups of order $r-1$.
+\end{proof}
+
+\begin{theorem}
+\label{thm:embedding_degree}
+
+Let $r$ be a prime number, $r \neq q$ and $r \mid \#E(\mathbb{F}_q)$. The embedding degree $k$ is the smallest integer such that $E[r] \subset E(\mathbb{F}_{q^k})$.
+
+\end{theorem}
+
+\begin{proof}
+
+Recall the Frobenius map $\pi(x, y) = (x^q, y^q)$, which holds that $P \in E(\mathbb{F}_{q^k}) \Leftrightarrow \pi^k(P) = P$ for any $k\in \Z$. We show that $r \mid q^k -1$ if and only if any point $P \in E[r]$ satisfies $\pi^k(P) =P$.
+
+Since $E[r] \cong \Z_r \times \Z_r$ and $\pi$ is a linear transformation ($\pi(P) + \pi(Q) = \pi(P + Q)$) we can write $E[r]$ as a vector space and $\pi$ as a matrix. The characteristic function is
+\[
+	X^2 - t X + q = 0
+\]
+Since $r \mid \#E(\mathbb{F}_q) = q + 1 - t$, $t \bmod r = q+1$. The characteristic function modulo $r$ becomes
+\[
+	X^2 - (q+1)X + q = 0 \bmod r \Longleftrightarrow (X-1)(X-q) = 0 \bmod r.
+\]
+So there are two eigenvalues: $1$ and $q$.
+
+Suppose $k > 1$, $r \nmid q-1$, the eigenvalues are distinct, and $E[r]$ is split into the sum of two 1-dimensional space.
+\begin{itemize}
+	\item Eigenvalue $1$: These are points $P$ such that $\pi(P) = P$, which implies $\pi^k(P) = P$.
+	\item Eigenvalue $q$: These are points $P$ such that $\pi(P) = [q] P$. Hence, $\pi^k(P) = [q^k]P$.
+\end{itemize}
+Since $P$ is in the $r$-torsion, we also have $[r] P = \mathcal{O}$. If $r \mid q^k - 1$, then $\pi^k(P) = P$; on the other hand, if $\pi^k(P) = P$, then $q^k = 1 \mod r$.
+
+Suppose $k = 1$, then all points $P \in E[r]$ satisfies $\pi(P) = P$, and thus $E[r] \subset E(\mathbb{F}_q)$. 
+
+\end{proof}
+
+\begin{definition}[Trace Map]
+The trace map $\text{Tr}: E(\mathbb{F}_{q^k}) \to E(\mathbb{F}_q)$ is defined as
+\[
+	\text{Tr}(P) = \sum_{\sigma \in \text{Gal}(\mathbb{F}_{q^k}/\mathbb{F}_q)} \sigma(P) = \sum_{i=0}^{k-1}\pi^i(P) = \sum_{i=0}^{k-1}(x^{q^i}, y^{q^i})\]
+We can also define the anti-trace map by $\text{aTr}(P) = [k]P - \text{Tr}(P)$. Note that for all $P \in E(\mathbb{F}_q)$, $\text{aTr}(P) = \mathcal{O}$; for all $P \in E(\mathbb{F}_{q^k})$, $\text{Tr}(\text{aTr}(P)) = \mathcal{O}$.
+\end{definition}
+
+\begin{proposition}
+\leavevmode
+\begin{itemize}
+	\item $\text{Tr}$ is a group homomorphism.
+	\item $\text{Tr}$ sends all $r$-torsion points into one subgroup of $r$-torsion.
+\end{itemize}
+
+\end{proposition}
+
+A nice illustration is given in Figure \ref{fig:trace_map}.
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Figure/trace_map.png}
+	\caption{The behaviour of the trace and anti-trace maps on $E[r]$ (from \cite{costello2012pairings}).}
+	\label{fig:trace_map}
+\end{figure}
+
+Now we emphasize the findings from the proof of Theorem \ref{thm:embedding_degree}, which charaterizes the structure of $E[r]$.
+There exists a unique subgroup of $E[r]$ in $E(\mathbb{F}_q)$, which is the $[1]$-eigenspace of $\pi$, or $E[r] \cap \ker(\pi - [1])$. We call this subgroup the \emph{base-field subgroup} $\mathcal{G}_1$.
+\begin{itemize}
+	\item For any $P \in \mathcal{G}_1$, $\text{Tr}(P) = [k]P$. One can check it by $\sum_{i=0}^{k-1}1 = k$.
+	\item For any $P \in E[r]$ not in $\mathcal{G}_1$, $\text{Tr}(P) \in \mathcal{G}_1$.
+
+	To see this, $\text{Tr}(P) \in E(\mathbb{F}_q)$ by definition, and $\text{Tr}$ preserves group structure, so $\text{Tr}(P)$ needs to be in $\mathcal{G}_1$.
+	\item We often consider the pairing group $\mathbb{G}_1 = \mathcal{G}_1$.
+\end{itemize}
+
+There exists another subgroup of $E[r]$, which is the $[q]$-eigenspace of $\pi$, or $E[r] \cap \ker(\pi - [q])$. We call this subgroup the \emph{trace-zero subgroup} $\mathcal{G}_2$.
+\begin{itemize}
+	\item For any $P \in \mathcal{G}_2$, $\text{Tr}(P) = \mathcal{O}$. One can check it by $\sum_{i=0}^{k-1}q^i = (q^k - 1)/(q-1) = 0 \bmod r$.
+	\item For any $P \in E[r]$ not in $\mathcal{G}_2$, $\text{aTr}(P) \in \mathcal{G}_2$.
+
+	To see this, $P = P_1 \oplus P_2$ for $P_1 \in \mathcal{G}_1, P_2 \in \mathcal{G}_2$, so $\text{aTr}(P) = [k]P_1 - \text{Tr}(P_1) + [k]P_2 - \text{Tr}(P_2) = [k]P_2 - \text{Tr}(P_2) = [k - \sum_{i=0}^{k-1}q^i]P_2 \in \mathcal{G}_2$
+	\item We often consider the pairing group $\mathbb{G}_2 = \mathcal{G}_2$.
+\end{itemize}
+
+\begin{definition}[Supersingular Elliptic Curve]
+	An elliptic curve $E$ is supersingular if the trace of Frobenius $t$ is a multiple of the characteristic of the field.
+	A supersingular elliptic curve is equipped with a distortion map $\phi: E(\mathbb{F}_q) \to E(\mathbb{F}_{q^k})$. The distortion map is a group homomorphism.
+\end{definition}
+
+\begin{proposition}
+For our purpose, we always assume $q > 3$ and $r \| \#E(\mathbb{F}_q)$. In this case, for a supersingular curve $E$, $\#E(\mathbb{F}_q) = q+1$ and the embedding degree is always $k=2$.
+\end{proposition}
+
+\begin{proof}
+	
+	Let $t = q + 1 - \#E(\mathbb{F}_q)$ be the trace of Frobenius. By Hasse’s theorem, $|t| \leq 2\sqrt{q}$. If $t$ is a multiple of $q$, then $t = 0$. Therefore, $\#E(\mathbb{F}_q) = q+1$. Moreover, because $r^2 \nmid \#E(\mathbb{F}_q)$, $E[r]$ is not contained in $E(\mathbb{F}_q)$, which implies $k > 1$. As $r \mid \#E(\mathbb{F}_q)$, $r \mid q^2-1$, so $k=2$.
+
+\end{proof}
+
+The $r$-torsion $E[r]$ is split as $\mathcal{G}_1 \oplus \mathcal{G}_2$. For any point in $E[r]$, we can map it to $\mathcal{G}_1$ via $\text{Tr}$ and $\mathcal{G}_2$ via $\text{aTr}$.
+\begin{itemize}
+	\item If a curve is ordinary, then we do not have computable maps out of $\mathcal{G}_1$ or $\mathcal{G}_2$.
+
+	\item If a curve is supersingular, then we have the distortion map $\phi$ out of $\mathcal{G}_1$ or $\mathcal{G}_2$.
+\end{itemize}
+
+\subsection{Pairing Types}
+
+\paragraph{Type-1 Pairing.}
+
+\begin{itemize}
+	\item $E$ is supersingular equipped with the distortion map $\phi$
+	\item $\mathbb{G}_1 = \mathbb{G}_2 = \mathcal{G}_1$
+	\item $e(P, Q) = \hat{e} (P, \phi(Q))$, where $\hat{e}$ is the Weil or Tate pairing.
+	\item No hashing problem: getting into $E(\mathbb{F}_q)[r]$ requires a simple cofactor multiplication once we have hashed into $E(\mathbb{F}_q)$.
+	\item Type-1 pairing is not very efficient: supersingular curves are highly restrictive when it comes to optimization.
+\end{itemize}
+
+\paragraph{Type-2 Pairing.}
+
+\begin{itemize}
+	\item $\mathbb{G}_1 = \mathcal{G}_1$ and $\mathbb{G}_2$ is any of the $r-1$ subgroups in $E[r]$ that is not $\mathcal{G}_1$ or $\mathcal{G}_2$.
+	\item There exists a map $\psi: \mathbb{G}_2 \to \mathbb{G}_1$ as the trace map.
+	\item There is no known way of hashing into $\mathbb{G}_2$ or generating random elements of $\mathbb{G}_2$.
+	\item We can still specify a generator $P_2 \in \mathbb{G}_2$ and generate elements via scalar multiplications. This is often undesirable though since we cannot generate random elements without knowing the discrete logarithm.
+\end{itemize}
+
+\paragraph{Type-3 Pairing.}
+
+\begin{itemize}
+	\item $\mathbb{G}_1 = \mathcal{G}_1$ and $\mathbb{G}_2 = \mathcal{G_2}$.
+	\item We can hash into $\mathbb{G}_2$. One way is by hashing into $E(\mathbb{F}_{q^k})$, a cofactor multiplication into $E(\mathbb{F}_{q^k})[r]$, and the map $\text{aTr}: E[r] \to \mathbb{G}_2$. But we have a more efficient way.
+	\item An isomorphism $\psi:\mathbb{G}_2 \to \mathbb{G}_1$ exists, but we do not have an efficient way to compute it.
+\end{itemize}
+
+\paragraph{Type-4 Pairing.}
+
+\begin{itemize}
+	\item $\mathbb{G}_1 = \mathcal{G}_1$ and $\mathbb{G}_2 = E[r]$.
+	\item Hashing into $\mathbb{G}_2$ is doable but not very efficient.
+	\item We cannot hash into $\mathbb{G}_2$ generated by some $P_2$ since $\mathbb{G}_2$ is not cyclic now.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    % Row 1
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+		\includegraphics[width=\textwidth]{Figure/Type-1.png}
+        \caption{Type 1 pairings.}
+		\label{fig:type1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+		\includegraphics[width=\textwidth]{Figure/Type-2.png}
+		\caption{Type 2 pairings.}
+		\label{fig:type2}
+    \end{subfigure}
+
+    \vspace{1em} % vertical space between rows
+
+    % Row 2
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+		\includegraphics[width=\textwidth]{Figure/Type-3.png}
+		\caption{Type 3 pairings.}
+		\label{fig:type3}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+		\includegraphics[width=\textwidth]{Figure/Type-4.png}
+		\caption{Type 4 pairings.}
+		\label{fig:type4}
+    \end{subfigure}
+
+	\caption{The four types of pairings (from \cite{costello2012pairings}).}
+	\label{fig:all_types}
+\end{figure}
+
+Unless otherwise stated, we consider Type-3 pairings: $\mathbb{G}_1 = \mathcal{G}_1 = E[r] \cap \ker(\pi - [1])$ and $\mathbb{G}_2 = \mathcal{G}_2 = E[r] \cap \ker(\pi - [q])$, which is usually the most efficient choice.
+
+\subsection{Twisted Curves}
+A twist of $E: y^2 = x^3 + ax + b$ is given by $E':y^2 = x^3 + a\omega^4 x + b \omega^6$, with the map
+\[
+	\Psi: E'(\mathbb{F}_{q^{k/d}}) \to E(\mathbb{F}_{q^k}): (x', y') \mapsto (x'/\omega^2, y'/\omega^3)
+\]
+where $\omega \in \mathbb{F}_{q^k}$. We represent elements $Q$ in $\mathbb{G}_2 = \mathcal{G}_2 \in E(\mathbb{F}_{q^k})$ as points $Q'$ in a smaller field $\mathbb{F}_{q^{k/d}}$, where the embedding degree $k$ has $d$ as a factor.
+
+The only available degrees of the twist on elliptic curves are $d \in \{2, 3, 4, 6\}$.
+
+\paragraph{$d = 2$ Quadratic Twists.}
+
+\begin{itemize}
+	\item Quadratic twists are available on any elliptic curve.
+	\item If $E/\mathbb{F_q}: y^2 = x^3 + ax+ b$, then $E'/\mathbb{F}_{q^{k/2}}: y^2 = x^3 + a\omega^4 x + b\omega^6$, with $\omega^2 \in \mathbb{F}_{q^{k/2}}$.
+	\item $\Psi$ takes elements in $E'(\mathbb{F}_{q^{k/2}})$ to elements in $E(\mathbb{F}_{q^k})$.
+\end{itemize}
+
+\paragraph{$d=3$ Cubic Twists.}
+
+\begin{itemize}
+	\item Cubic twists are only available when $a = 0$.
+	\item If $E/\mathbb{F_q}: y^2 = x^3 + b$, then $E'/\mathbb{F}_{q^{k/2}}: y^2 = x^3 + b\omega^6$, with $\omega^3, \omega^6 \in \mathbb{F}_{q^{k/3}}$ but $\omega^2 \in \mathbb{F}_{q^k} \setminus \mathbb{F}_{q^{k/3}}$.
+	\item $\Psi$ takes elements in $E'(\mathbb{F}_{q^{k/3}})$ to elements in $E(\mathbb{F}_{q^k})$.
+\end{itemize}
+
+\paragraph{$d=4$ Quartic Twists.}
+
+\begin{itemize}
+	\item Quartic twists are only available when $b = 0$.
+	\item If $E/\mathbb{F_q}: y^2 = x^3 + ax$, then $E'/\mathbb{F}_{q^{k/4}}: y^2 = x^3 + a\omega^4 x$ with $\omega^4 \in \mathbb{F}_{q^{k/4}}$ and $\omega^2 \in \mathbb{F}_{q^{k/2}}$ but $\omega^3 \in \mathbb{F}_{q^k} \setminus \mathbb{F}_{q^{k/2}}$.
+	\item $\Psi$ takes elements in $E'(\mathbb{F}_{q^{k/4}})$ to elements in $E(\mathbb{F}_{q^k})$.
+\end{itemize}
+
+\paragraph{$d=6$ Sextic Twists.}
+
+\begin{itemize}
+	\item Sextic twists are only available when $a = 0$.
+	\item If $E/\mathbb{F_q}: y^2 = x^3 + b$, then $E'/\mathbb{F}_{q^{k/6}}: y^2 = x^3 + b\omega^6$, with $\omega^6 \in \mathbb{F}_{q^{k/6}}$ and $\omega^3 \in \mathbb{F}_{q^{k/3}}$ and $\omega^2 \in \mathbb{F}_{q^{k/2}}$.
+	\item $\Psi$ takes elements in $E'(\mathbb{F}_{q^{k/6}})$ to elements in $E(\mathbb{F}_{q^k})$.
+\end{itemize}
+
+\section{Weil Pairing}
+
+\begin{definition}[Weil Pairing]
+Let $P, Q \in E(\mathbb{F}_{q^k})[r]$ and let $D_P, D_Q \in \text{Div}^0(E)$ be degree-zero divisors such that $D_P \sim (P) - (\mathcal{O})$, $D_Q \sim (Q) - (\mathcal{O})$, and $D_P$ and $D_Q$ \emph{have disjoint supports}. There exist functions $f$ and $g$ such that $(f) = rD_P$ and $(g) = rD_Q$.
+The Weil pairing $w_r: E(\mathbb{F}_{q^k})[r] \times  E(\mathbb{F}_{q^k})[r] \to \mu_r$ is defined as
+\[
+	w_r(P, Q) = \frac{f(D_Q)}{g(D_P)}.
+\]
+\end{definition}
+
+\paragraph{Well-definedness.}
+
+\begin{itemize}
+
+\item Free choice of $f$: Given $D \in \text{Div}^0$, the function $f$ such that $(f) = D$ is unique up to a scalar multiple $\lambda \in \mathbb{F}_{q^k}^*$. For any $\lambda f$, $(\lambda f)(D_Q) = \lambda^{\deg D_Q} \cdot f(D_Q) = f(D_Q)$ since $\deg D_Q = 0$.
+	
+\item Free choice of divisor: If we replace some $D_P$ with an equivalent $D_P'$, then $D_P' = D_P + (h)$ for some function $h$, and we would have $f'$ be such that $(f') = r D_P'$, so $f' = f \cdot h^r$. Now, we have      
+\[
+	f'(D_Q) = f(D_Q) \cdot h(D_Q)^r, \quad g(D_P') = g(D_P) \cdot g((h))
+\]        
+By Weil Reciprocity, $g((h)) = h((g)) = h(r D_Q) = h(D_Q)^r$. Hence $\frac{f(D_Q)}{g(D_P)} = \frac{f'(D_Q)}{g(D_{P}')}$.
+        
+\item Range is the unity: $\omega_r(P,Q)^r = \frac{f^r(D_Q)}{g^r(D_P)} = \frac{f(rD_Q)}{g(rD_P)}$. Note that $(f) = rD_P$ and $(g) = rD_Q$, so $w_r(P,Q)^r = \frac{f((g))}{g((f))} = 1$ by Weil Reciprocity.
+
+\end{itemize}
+
+\subsection{Evaluation of Weil Pairing}
+
+Pick $D_P' = (P) - (\mathcal{O})$, $f = f_{r,P}$, $D_Q = (Q+S) - (S)$ for some random point $S$, and $g = f_{r,Q}\circ T_{-S}$, where $T_{-S}(X) = X-S$ shifts a point $X$ to $X-S$. Note that $(f) = r(P) - r(\mathcal{O}) = rD_P'$. Moreover, if $f_{r,Q}$ has a zero or pole at a point $X$, $g$ has a zero or pole at the point $X+S$. As $(f_{r,Q}) = r(Q) - r(\mathcal{O})$, we also have $(g) = r(Q+S) - r(S)$. 
+    
+The Weil pairing evaluates to
+\[
+	w_r(P, Q) = \frac{f(D_Q)}{g(D_P')} = \frac{f_{r,P}(D_Q)}{f_{r,Q}(P-S) / f_{r,Q}(-S)} = \frac{f_{r,P}(D_Q)}{f_{r,Q}(D_P)},
+\]
+where $D_P = (P-S) - (-S)$. Therefore, the Weil pairing can be evaluated by Miller’s algorithm, which computes $f_{r,P}(D_Q)$ and $f_{r,Q}(D_P)$ in $O(\log r)$ steps.
+
+
+
+\section{Tate Pairing}
+
+Recall that we assume $r \| \#E(\mathbb{F}_q)$. We now also assume that $r^2 \| \#E(\mathbb{F}_{q^k})$.
+
+Define
+\[
+	rE(\mathbb{F}_{q^k}) = \{[r]P: P \in E(\mathbb{F}_{q^k})\}
+\]
+This is a subgroup of $E(\mathbb{F}_{q^k})$ and has order $\frac{\#E(\mathbb{F}_{q^k})}{r^2} = h$. Therefore, we can consider the quotient group
+\[
+	E/rE: \{R + rE: R \in E(\mathbb{F}_{q^k})\}, \quad P_1 + rE = P_2 + rE \Leftrightarrow P_1-P_2 \in rE
+\]
+There are $r^2$ distinct cosets, each has a unique element in $E[r]$.
+
+\paragraph{More Details.}
+    
+Consider the map $[r]: P \mapsto [r]P$. It is a homomorphism and has kernel $E[r]$ and image $rE$. By the first isomorphism theorem,
+\[
+    E(\mathbb{F}_{q^k}) / E[r] \cong rE(\mathbb{F}_{q^k}).
+\]
+Hence, $\#rE = \frac{\#E(\mathbb{F}_{q^k})}{r^2}$. Moreover, since $r^3 \nmid E(\mathbb{F}_{q^k})$, we can split $E(\mathbb{F}_{q^k}) = E[r] \oplus E_c$ for some subgroup $E_c$ of order $c$ by the Fundamental Theorem of Finite Abelian Groups. If $R \in rE$, then $R = (rA, rB)$ for some $(A, B) \in (E[r], E_c)$, which means $R = (0, rB)$. Since $c$ is coprime to $r$, the set $\{rB: B \in E_c\} = E_c$. $rE$ is exactly $E_c$. Therefore, $rE \cap E[r] = \{\mathcal{O}\}$.
+    
+This means we also have
+\[
+    E(\mathbb{F}_{q^k}) / rE(\mathbb{F}_{q^k}) \cong E[r].
+\]
+Therefore, each $P \in E[r]$ yields a distinct $P+rE$. There are $r^2$ elements in $E[r]$, and there are also $r^2$ cosets.
+
+\begin{definition}[Tate Pairing]
+Let $P \in E(\mathbb{F}_{q^k})[r]$ and let $f$ be a function whose divisor is $(f) = r(P) - r(\mathcal{O})$.
+Let $Q \in E(\mathbb{F}_{q^k}) / rE(\mathbb{F}_{q^k})$ and let $D_Q$ be a degree-zero divisor that is equivalent to $(Q) - (\mathcal{O})$ and has a support disjoint to that of $(f)$.
+The Tate pairing $t_r: E(\mathbb{F}_{q^k})[r] \times E(\mathbb{F}_{q^k})/rE(\mathbb{F}_{q^k}) \to \mathbb{F}_{q^k}^* / (\mathbb{F}_{q^k}^*)^r$ is defined as
+\[
+	t_r(P, Q) = f(D_Q).
+\]
+\end{definition}
+
+We note that $(\mathbb{F}_{q^k}^*)^r = \{u^r : u \in \mathbb{F}_{q^k}^*\}$.
+
+\paragraph{Well-definedness.}
+\begin{itemize}
+	\item Free choice of $f$: Given a divisor $D$. If $(f) = D$, then $f$ is unique up to a non-zero scalar multiple. Since $\deg D_Q = 0$, $f(D_Q)$ is fixed.
+	\item Free choice of divisor: Let $D_Q, D_Q'$ be two divisors equivalent to $(Q) - (\mathcal{O})$ and have disjoint support to that of $(f)$. There exists a function $h$ such that $D_Q' = D_Q + (h)$. Hence, $f(D_Q') = f(D_Q) \cdot f((h))$. By Weil Reciprocity, $f((h)) = h((f)) = (\frac{h(P)}{h(\mathcal{O})})^r$. $f(D_Q')$ is equivalent to $f(D_Q)$ up to a multiple in $(\mathbb{F}_{q^k}^*)^r$.
+	\item Image in $\mathbb{F}_{q^k}^* / (\mathbb{F}_{q^k}^*)^r$: Let $Q' = Q + [r]S$ for some $S \in E(\mathbb{F}_{q^k})$. We show that $t_r(P, Q) = t_r(P, Q') \bmod (\mathbb{F}_{q^k}^*)^r$.
+    Let $D_Q'$ be a degree-zero divisor that is equivalent to $(Q') - (\mathcal{O})$ and has a disjoint support to $(f)$. Let $D_S$ be a divisor equivalent to $(S) - (\mathcal{O})$ and has a disjoint support to $(f)$.
+	\[
+        (Q') - (Q) \sim (Q') - (Q) - [(Q') - (Q) - r(S) + r (\mathcal{O})] \sim rD_S
+    \]
+    Therefore,
+    \[
+        (Q') - (\mathcal{O}) \sim (Q) - (\mathcal{O}) + rD_S \implies D_{Q}' \sim D_{Q} + rD_S
+	\]
+    Let $D_Q' = D_Q + rD_S + (h)$ for some function $h$. Again, by Weil Reciprocity
+    \[
+        f(D_Q') = f(D_Q) \cdot f(D_S)^r \cdot f((h)) = f(D_Q) \cdot f(D_S)^r \cdot \left(\frac{h(P)}{h(\mathcal{O})}\right)^r
+	\]
+    Therefore, $t_r(P, Q) = t_r(P, Q') \bmod (\mathbb{F}_{q^k}^*)^r$.
+\end{itemize}
+    
+Since the output lies in an equivalence class $\mathbb{F}_{q^k}^* / (\mathbb{F}_{q^k}^*)^r$, it is not useful in practice unless we modify the definition.
+
+\begin{definition}[Reduced Tate Pairing]
+
+Let $P \in E(\mathbb{F}_{q^k})[r]$ and let $f$ be a function whose divisor is $(f) = r(P) - r(\mathcal{O})$.
+Let $Q \in E(\mathbb{F}_{q^k}) / rE(\mathbb{F}_{q^k})$ and let $D_Q$ be a degree-zero divisor that is equivalent to $(Q) - (\mathcal{O})$ and has a support disjoint to that of $(f)$.
+The \emph{reduced} Tate pairing $t_r: E(\mathbb{F}_{q^k})[r] \times E(\mathbb{F}_{q^k})/rE(\mathbb{F}_{q^k}) \to \mu_r$ is defined as
+\[
+	T_r(P, Q) = t_r(P, Q)^{(q^k-1)/r} = f(D_Q)^{(q^k-1)/r}.
+\]
+\end{definition}
+
+One can just use $f = f_{r,P}$.
+
+\paragraph{Well-definedness of Reduced Tate Pairing.}
+\begin{itemize}
+	\item Same elements in $\mathbb{F}_{q^k}^* / (\mathbb{F}_{q^k}^*)^r$ mapped to the same elements in $\mu_r$:  Given $u, v \in \mathbb{F}_{q^k}^*$ such that $u = \lambda v, \lambda \in (\mathbb{F}_{q^k}^*)^r$. We have $u^{(q^k-1)/r} = v^{(q^k-1)/r} \cdot \lambda^{(q^k-1)/r} = v^{(q^k-1)/r}$.
+    \item Same elements in $\mu_r$ correspond to the same elements in $\mathbb{F}_{q^k}^* / (\mathbb{F}_{q^k}^*)^r$: Let $u = u_r^{(q^k-1)/r}$ and $v = v_r^{(q^k-1)/r}$ and $u = v$. Suppose $u_r = \lambda v_r$, then $\lambda^{(q^k-1)/r} = 1$. Since $\mathbb{F}_{q^k}^*$ is a cyclic group, there exists a generator $g$ such that $g^\ell = \lambda$ for some $\ell$. So we have $q^{k}-1 \mid \frac{q^{k}-1}{r} \cdot \ell$, which implies $\ell$ is a multiple of $r$ and $\lambda = (g^{\ell/r})^r \in (\mathbb{F}_{q}^*)^r$. Therefore, $u_r = v_r \bmod (\mathbb{F}_{q}^*)^r$.
+\end{itemize}
+
+We have shown that each element in $E[r]$ corresponds to one element in $E(\mathbb{F}_{q^k})/rE(\mathbb{F}_{q^k})$. Therefore, from now on we will always consider $P \in \mathcal{G}_1 = E[r] \cap \ker(\pi - [1])$ and $Q \in \mathcal{G}_2 = E[r] \cap \ker(\pi - [q])$.
+
+
+\section{Miller's Algorithm}
+
+We recall that the function $f_{m,P}$ is defined by its divisor $(f_{m,P}) = m(P) - ([m]P) - (m-1)(\mathcal{O})$. We have seen that $f_{m+1, P} = f_{m, P} \cdot \frac{\ell_{[m]P, P}}{v_{[m+1]P}}$ and $f_{1,P} = 1$.
+
+For Weil or Tate pairing, we need to compute $f_{r,P}$, where $P \in E[r]$. Note that $(v_{rP})$ is the zero divisor, $\ell_{[r-1]P, P}$ is the vertical line in the denominator of the previous term $\frac{\ell_{[r-2]P, P}}{v_{[r-1]P}}$. Hence
+\[
+	f_{r,P} = \ell_{[r-2]P, P} \cdot \prod_{i=1}^{r-3} \frac{\ell_{iP, P}}{v_{[i+1]P}}
+\]
+Therefore, the computation requires a complexity $O(r)$. For exponential $r$, it is very inefficient.
+
+Instead of adding one zero at $P$ and one pole at $\mathcal{O}$, we can \emph{double}. That is, observe that
+\begin{gather*}
+	(f_{2m,P}) = 2m(P) - ([2m]P) - (2m-1)(\mathcal{O}), (f_{m,P}^2) = 2m(P) - 2([m]P) - (2m-2)(\mathcal{O}) \\
+\implies (f_{2m,P}) - (f_{m,P}^2) = 2([m]P) - ([2m]P) - (\mathcal{O}) = \left(\frac{\ell_{[m]P, [m]P}}{v_{[2m]P}}\right)
+\end{gather*}
+where $\ell_{[m]P, [m]P}$ is the tangent line at $[m]P$. We can thus update $f_{2m,P} = f_{m,P}^2 \cdot \frac{\ell_{[m]P, [m]P}}{v_{[2m]P}}$.
+
+Finally, since $f_{r,P}$ has a degree as large as $r$, so we do not compute $f_{r,P}$, but evaluate $f_{m,P}(D_Q) \in \mathbb{F}_{q^k}$ at each stage.
+\begin{algorithm}[H]
+	\caption{Miller's Algorithm}
+	\label{alg:miller}
+	\begin{algorithmic}[1]
+		\Require $P \in \mathbb{E}(\mathbb{F}_{q^k})[r]$, $D_Q$ with support disjoint from $f_{r,P}$, $r = (r_{n-1} \dots r_1r_0)_2$ with $r_{n-1} = 1$.
+		\Ensure $f_{r,P}(D_Q)$
+		\State $R \gets P, f \gets 1$
+		\For{$i = n-2$ down to $0$}
+			\State Compute $\ell_{R,R}$ and $v_{[2]R}$
+			\State $f \gets f^2 \cdot \frac{\ell_{R,R}}{v_{[2]R}}(D_Q)$
+			\State $R \gets [2]R$
+			\If{$r_i = 1$}
+				\State Compute $\ell_{R,P}$ and $v_{R+P}$
+				\State $f \gets f \cdot \frac{\ell_{R,P}}{v_{R+P}}(D_Q)$
+				\State $R \gets R + P$
+			\EndIf
+		\EndFor
+		\State \Return $f$
+
+	\end{algorithmic}
+\end{algorithm}
+
+\subsection{Optimizations}
+
+For Tate pairing, we can enjoy many optimizations.
+\begin{itemize}
+	\item If $P$ and $Q$ are independent, $f_{r,P}(D_Q)^{(q^k-1)/r} = f_{r,P}(Q)^{(q^k-1)/r}$. This not only eliminates the need to find an equivalent divisor $D_Q$ that has a different support than $(Q) - (\mathcal{O})$ but also to evaluate $f$ at two points.
+	\item We have $q-1 \mid \frac{q^{k}-1}{r}$. This is because $k > 1$ and thus $r \nmid q-1$. Let $q^{k}-1 = c \cdot (q-1)$. Since $f_{r,P}(Q)^{q^k-1} = (f_{r,P}(Q)^{q-1})^{c}$, we can multiply or divide $f_{r,P}(Q)$ by any factors in $\mathbb{F}_q$ without affecting the final pairing value.
+	\begin{itemize}
+		\item If $E$ is supersingular, $k = 2$, and the $x$-coordinate of $Q$ is always in $\mathbb{F}_q$. As a result, we can remove all the $v_{[2]R}(Q)$ computation in the Miller’s algorithm.
+		\item If $E$ is ordinary, suppose $k$ is even, $x_Q$ is always in $\mathbb{F}_{q^{k/2}}$ by Lemma \ref{lemma:Q_in_smaller_field}. We can also remove the denominator in this case as $q^{k/2} - 1 \mid \frac{q^{k}-1}{r}$.
+	\end{itemize}
+\end{itemize}
+
+\begin{lemma}
+\label{lemma:Q_in_smaller_field}
+	Let $Q \in \mathcal{G}_2 = E[r] \cap \ker(\pi - [q])$. If $k$ is even, then the $x$-coordinate of $Q$ is in $\mathbb{F}_{q^{k/2}}$.
+
+\end{lemma}
+
+\begin{proof}
+
+	Suppose $k$ is even, $q^{k}-1 = (q^{k/2}-1)(q^{k/2}+ 1)$. Since $r \nmid q^{k/2-1}$ and $r \mid q^{k}-1$, we have $q^{k/2}+1 = 0 \bmod r$. Notice that $\pi^{k/2}(Q) = (x_Q^{q^{k/2}}, y_Q^{q^{k/2}}) = [q^{k/2}]Q = -Q = (x_Q, -y_{Q})$. The first equality is by definition of $\pi$, and the second is because $Q$ is in $[q]$-eigenspace of $\pi$. Now, $x_{Q}^{q^{k/2}} = x_Q$ implies $x_Q \in \mathbb{F}_{q^{k/2}}$.
+
+\end{proof}
+
+\begin{algorithm}[H]
+	\caption{Miller's Algorithm (The BKLS-GHS Version)}
+	\label{alg:miller}
+	\begin{algorithmic}[1]
+		\Require $P \in \mathbb{G}_1$, $Q \in \mathbb{G}_2$ on some twist of degree $d \mid k$, $k$ is even, $r = (r_{n-1} \dots r_1r_0)_2$ with $r_{n-1} = 1$
+		\Ensure $f_{r,P}(Q)^{(q^k-1)/r}$
+		\State $R \gets P, f \gets 1$
+		\For{$i = n-2$ down to $0$}
+			\State Compute $\ell_{R,R}$
+			\State $f \gets f^2 \cdot \ell_{R,R}(Q)$
+			\State $R \gets [2]R$
+			\If{$r_i = 1$}
+				\State Compute $\ell_{R,P}$
+				\State $f \gets f \cdot \ell_{R,P}(Q)$
+				\State $R \gets R + P$
+			\EndIf
+		\EndFor
+		\State \Return $f^{(q^k-1)/r}$
+
+	\end{algorithmic}
+\end{algorithm}
+
+We note that in practice, we can use projective coordinates to represent points on the elliptic curve to further optimize the computation by avoiding expensive field inversions.
+\begin{itemize}
+	\item Since $Q$ is fixed during the Miller loop, we do not need projective coordinates for it.
+	\item Compute $R \gets [2]R$ and $R \gets R+P$ in projective coordinates.
+	\item We can also compute $\ell_{R,R}(\cdot)$ and $\ell_{R,P}(\cdot)$ in projective coordinates.
+\end{itemize}
+
+\subsection{Role of Twists in Miller's Algorithm}
+
+Mathematically, a point $Q \in \mathbb{G}_2$ on the original curve $E(\mathbb{F}_{q^k})$ and its twisted counterpart $Q' =\Psi^{-1}(Q)$ on the smaller curve $E'(\mathbb{F}_{q^{k/d}})$ represent the exact same geometric data. However, in a computer's memory, finite field elements are represented as polynomials. Using a twist functions as an optimized \emph{change of variables} (or change of basis) to an algebraic structure that is mostly zeros.
+
+\begin{itemize}
+	\item Without a twist:
+		\begin{enumerate}
+			\item Evaluating $\ell(Q)$ in Miller's algorithm yields a \emph{dense} polynomial in $\mathbb{F}_{q^k}$. 
+			\item Running accumulator: $f \leftarrow f^2 \cdot \ell(Q)$ requires a \emph{dense-by-dense} field multiplication (e.g., $k\times k$ base field cross-multiplications).
+		\end{enumerate}
+	\item With a twist:
+		\begin{enumerate}
+			\item Evaluating $\ell(\Psi(Q'))$ yields a \emph{sparse} polynomial where only a few coefficients (associated with specific powers of the twist variable $\omega$) are non-zero.
+			\item Running accumulator: $f \leftarrow f^2 \cdot \ell(Q)$ requires a \emph{dense-by-sparse} field multiplication (e.g., $k\times k/d$ base field cross-multiplications).
+		\end{enumerate}
+\end{itemize}
+%-------------------
+%% Reference List
+\pagebreak
+
+\nocite{*}
+\printbibliography
+
+\end{document}
