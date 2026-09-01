@@ -1,0 +1,322 @@
+%%%%%%%%%%%%%%%%%%%%
+
+% Project Name: Probability Inequalities
+% File: main.tex
+% Author: Keng-Yu Chen
+
+%%%%%%%%%%%%%%%%%%%%
+
+\input{header}
+
+\begin{document}
+
+\maketitle
+
+This note summarizes some useful probability inequalities: the Markov inequality (Section \ref{sec:markov}), Chebyshev's inequality (Section \ref{sec:chebyshev}), Cantelli's inequality (Section \ref{sec:cantelli}), Hoeffding's inequality (Section \ref{sec:hoeffding}), Chernoff bound (Section \ref{sec:chernoff}), and Jensen's inequality (Section \ref{sec:jensen}).
+
+\section{Markov Inequality}
+\label{sec:markov}
+
+Let $X$ be a nonnegative random variable and $a>0$. Then we have
+\[
+	\Pr[X \geq a] \leq \frac{\mathbb{E}[X]}{a}.
+\]
+
+\begin{proof}
+
+Intuitively,
+\[
+	\mathbb{E}[X] = \Pr[X<a]\cdot \mathbb{E}[X \mid X<a] + \Pr[X\geq a]\cdot \mathbb{E}[X \mid X \geq a].
+\]
+Note $\mathbb{E}[X \mid X \geq a] \geq a$ and $\mathbb{E}[X \mid X<a] > 0$ since $X \geq 0$. Therefore,
+\[
+	\mathbb{E}[X] \geq a \Pr[X \geq a].
+\]
+Another approach: Let $f(x)$ the pdf of $X$,
+\[
+	\mathbb{E}[X] = \int_0^\infty xf(x)\,dx \geq \int_a^\infty xf(x)\,dx \geq \int_a^\infty af(x)\,dx = a \Pr[X \geq a].
+\]
+
+\end{proof}
+
+\begin{corollary}
+
+Given a monotonic $\phi$,
+\[
+   \Pr[X\geq a] = \Pr[\phi(X) \geq \phi(a)] \leq \frac{\mathbb{E}[\phi(x)]}{\phi(a)}.
+\]
+\end{corollary}
+
+\section{Chebyshev's Inequality}
+\label{sec:chebyshev}
+
+Let $X$ be a random variable and $a>0$. Then we have
+\[
+	\Pr[|X - \mathbb{E}[X]| \geq a] \leq \frac{Var[X]}{a^2}.
+\]
+One also writes for $k \geq 1$,
+\[
+	\Pr[|X - \mathbb{E}[X]| \geq k\sigma] \leq \frac{1}{k^2}.
+\]
+
+\begin{proof}
+
+Let $Y = (X - \mathbb{E}[X])^2$. With constant $a^2$, the Markov inequality gives
+\[
+	\Pr[Y \geq a^2] \leq \frac{\mathbb{E}[Y]}{a^2}.
+\]
+Note that $Y \geq a^2 \Leftrightarrow |X - \mathbb{E}[X]| \geq a$, and $\mathbb{E}[Y] = Var[X]$.
+
+\end{proof}
+
+
+\begin{corollary}
+\mbox{}
+\\
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+	\item Multidimensional Chebyshev's inequality
+	\[
+	   \Pr \left[ \sum_{i=1}^n (X_i - \mu_i)^2 \geq k^2 \sum_{i=1}^n \sigma_i^2 \right] \leq \frac{1}{k^2}.
+	\]
+	Or
+	\[
+	   \Pr[\| X - \mu \| \geq k \|\sigma\|] \leq \frac{1}{k^2}.
+	\]
+
+	\item Higher Moments: By applying Markov's inequality to nonnegative $|X-\mathbb{E}[X]|^n$,
+	\[
+		\Pr\left[ |X - \mathbb{E}[X] | \geq k\, \mathbb{E}[\, |X - \mathbb{E}[X]|^n\,]^\frac{1}{n} \right] \leq \frac{1}{k^n},
+	\]
+	where when $n=2$, it is the Chebyshev's inequality.
+
+	\item One-tailed Checyshev's inequality
+	\[
+	   \Pr[X - \mu \geq k\sigma^2] \leq \frac{1}{1+k^2}.
+	\]
+	This comes from the Cantelli's inequality.
+\end{enumerate}
+\end{corollary}
+
+\section{Cantelli's Inequality}
+\label{sec:cantelli}
+
+Let $X$ be a random variable and $\lambda > 0$. Then we have
+\[
+	\Pr[X - \mathbb{E}[X] \geq a] \leq \frac{\sigma^2}{\sigma^2 + a^2}.
+\]
+One also has
+\[
+	\Pr[X - \mathbb{E}[X] \leq -a] \leq \frac{\sigma^2}{\sigma^2 + a^2}.
+\]
+
+\begin{proof}
+
+Let $Y = X - \mathbb{E}[X]$, and thus $\mathbb{E}[Y] = 0$ and $Var(Y) = \sigma^2$.
+\[
+	\Pr[Y \geq a] = \Pr[Y+u \geq a+u] \leq \Pr[(Y +u)^2 \geq (a+u)^2] a\leq \frac{\mathbb{E}[(Y+u)^2]}{(a+u)^2} = \frac{\sigma^2 + u^2}{(a+u)^2}.
+\]
+for any $u \in \R$. We can choose $u$ to make the last term minimal by differentiation. That is, $u = \sigma^2/a$. Now,
+\[
+	\Pr[Y \geq a] \leq \frac{\sigma^2 + u^2}{(a+u)^2} = \frac{\sigma^2}{a^2 + \sigma^2}.
+\]
+\end{proof}
+
+\section{Hoeffding's Ineqaulity}
+\label{sec:hoeffding}
+
+Let $X_1,X_2,\cdots,X_n$ be independent random variables and $a_i \leq X_i \leq b_i$ almost surely. Let $S_n=\sum_{i=1}^nX_i$. The Hoeffding's inequality states that for all $t > 0$,
+\[
+	\Pr[S_n - \mathbb{E}[S_n] \geq t] \leq \exp\left( -\frac{2t^2}{\sum_{i=1}^n (b_i - a_i)^2} \right).
+\]
+Equivalently,
+\[
+	\Pr[ |S_n - \mathbb{E}[S_n] |\geq t] \leq 2\exp\left( -\frac{2t^2}{\sum_{i=1}^n (b_i - a_i)^2} \right).
+\]
+
+\noindent \textbf{Special Case:} If $a_i=0, b_i=1$, the Hoeffding's inequality gives
+\[
+	\Pr[S_n - \mathbb{E}[S_n] \geq t] \leq \exp \left( -\frac{2t^2}{n} \right).
+\]
+
+\begin{lemma}[Hoeffding's Lemma]
+
+Let $X$ be any random variable and $a\leq X \leq b$ almost surely. For any $s \in \R$,
+\[
+	\mathbb{E}[e^{s(X - \mathbb{E}[X])}] \leq \exp \left( \frac{s^2(b-a)^2}{8} \right).
+\]
+\end{lemma}
+
+\begin{proof}
+
+We may assume WLOG that $\mathbb{E}[X] = 0$, otherwise we can replace $X$ with $X-\mathbb{E}[X]$. Since $e^{sx}$ is convex, we have
+\[
+	e^{sx} \leq \frac{b-x}{b-a}e^{sa} + \frac{x-a}{b-a}e^{sb}.
+\]
+\[
+\begin{aligned}
+	\mathbb{E}[e^{sX}] \leq \frac{b-\mathbb{E}[X]}{b-a}e^{sa} + \frac{\mathbb{E}[X]-a}{b-a}e^{sb} = \frac{b}{b-a}e^{sa} + \frac{-a}{b-a}e^{sb} = \exp\left[ L(\lambda(b-a)) \right], \\
+\end{aligned} 
+\]
+where
+\[
+	L(h) = \frac{ha}{b-a} + \ln \left( 1 +\frac{a - e^h a}{b-a} \right).
+\]
+By Taylor's therorem, there exists some $0 \leq \theta \leq 1$,
+\[
+	L(h) = L(0) + hL'(0) + \frac{1}{2}h^2L''(h\theta) = -\frac{1}{2}h^2\frac{abe^{h\theta}}{(b - ae^{h\theta})^2} \leq \frac{1}{8}h^2,
+\]
+where we use AMGM inequality to derive $L''(h) \leq \frac{1}{4}$. In conclusion,
+\[
+	\mathbb{E}[e^{sX}] \leq \exp\left( \frac{1}{8}s^2(b-a)^2 \right).
+\]
+\end{proof}
+
+\begin{proof}[Proof of Hoeffding's Inequality]
+Using Hoeffding's lemma, we can prove the Hoeffding's inequality. First from Markov's inequality and independence of $X_i$, for any $s,t > 0$,
+\[
+	\begin{aligned}
+	\Pr[S_n - \mathbb{E}[S_n] \geq t] 
+	&= \Pr[\exp(s(S_n - \mathbb{E}[S_n])) \geq \exp(st)] \\
+	&\leq \frac{\mathbb{E}[\exp(s(S_n - \mathbb{E}[S_n]))]}{\exp(st)} \\
+	&\leq \frac{\prod_{i=1}^n \mathbb{E} [ \exp(s(X_i - \mathbb{E}[X_i])) ]}{\exp(st)}.
+	\end{aligned}
+\]
+By Hoeffding's lemma,
+\begin{gather*}
+	\mathbb{E} [ \exp(s(X_i - \mathbb{E}[X_i])) ] \leq \exp\left( \frac{1}{8}s^2(b_i-a_i)^2 \right), \\
+	\implies \Pr[S_n - \mathbb{E}[S_n] \geq t] \leq \exp \left( -st + \frac{1}{8}s^2\sum_{i=1}^n(b_i - a_i)^2 \right).
+\end{gather*}
+The upperbound is minimized when
+\[
+	s = \frac{4t}{\sum_{i=1}^n (b_i - a_i)^2}.
+\]
+Hence,
+\[
+	\Pr[S_n - \mathbb{E}[S_n] \geq t] \leq \exp \left( -\frac{2t^2}{\sum_{i=1}^n (b_i - a_i)^2} \right).
+\]
+\end{proof}
+
+\section{Chernoff Bound}
+\label{sec:chernoff}
+
+Let $X$ be a random variable and $t>0$, by Markov's inequality
+\[
+	\Pr[X \geq a] = \Pr[e^{tX} \geq e^{ta}] \leq \frac{\mathbb{E}[e^{tX}]}{e^{ta}}.
+\]
+Note this applies for all $t$,
+\[
+	\Pr[X \geq a] \leq \inf_{t \geq 0} \frac{\mathbb{E}[e^{tX}]}{e^{ta}}.
+\]
+
+\subsection{Application}
+
+Let $X_i$ be Bernoulli random variable with probability $p_i$, and let $X=\sum X_i$. First note that
+\[
+	\mathbb{E}[e^{tX_i}] = 1-p_i + p_ie^t =  1 + p_i(e^{t} - 1).
+\]
+Consider the inequality $1+y \leq e^y$, $\mathbb{E}[e^{tX_i}] \leq e^{p_i(e^t - 1)}$, and thus
+\[
+	\mathbb{E}[e^{tX}] \leq \prod e^{p_i(e^t - 1)} = e^{\mu (e^t - 1)},
+\]
+where $\mu = \mathbb{E}[X]$. Now let $a = (1+\delta)\mu$, $t = \ln(1+\delta)$, we have
+\[
+\Pr[X \geq (1+\delta)\mu] \leq (1+\delta)^{-(1+\delta)\mu} e^{\mu \delta} = \left(\frac{e^\delta}{(1+\delta)^{(1+\delta)}}\right)^\mu.
+\]
+Similarly,
+\[
+	\Pr[X < (1-\delta)\mu] \leq (1+\delta)^{-(1-\delta)\mu} e^{\mu \delta} = \left(\frac{e^{-\delta}}{(1-\delta)^{(1-\delta)}}\right)^\mu.
+\]
+One step further, logarithm of the RHS gives
+\[
+	\mu(\delta - (1+\delta)\ln(1+\delta)).
+\]
+By the inequality $\ln(1+x) \leq \frac{x}{1+x/2}$, we have
+\[
+	\mu(\delta - (1+\delta)\ln(1+\delta)) \leq \mu(\delta - (1+\delta)\frac{\delta}{1 + \delta/2}) = -\frac{\delta^2\mu}{2+\delta}.
+\]
+Therefore,
+\begin{gather}
+	\Pr[X \geq (1+\delta)\mu] \leq \exp \left(- \frac{\delta^2 \mu}{2+\delta} \right) \quad\forall \delta > 0 \\
+	\Pr[X \leq (1-\delta)\mu] \leq \exp \left(- \frac{\delta^2 \mu}{2} \right) \quad \forall \delta \in (0,1)
+\end{gather}
+Moreover,
+\begin{equation}
+	\Pr[|X - \mu| \geq \delta\mu] \leq 2e^{-\mu\delta^2 / 3} \quad \forall \delta \in (0,1)
+\end{equation}
+
+\section{Jensen's Inequality}
+\label{sec:jensen}
+
+First define a convex function.
+
+\begin{definition}[Convex Function]
+
+A function $f(x)$ is said to be convex over interval $(a,b)$ if for all $x_1,x_2 \in (a,b)$ and $0 \leq \lambda \leq 1$,
+\[
+	f(\lambda x_1 + (1-\lambda)x_2 ) \leq \lambda f(x_1) + (1 - \lambda)f(x_2).
+\]
+It is called strictly convex if the equality holds only if $\lambda=0$ or $\lambda=1$.
+A function is concave if $(-f)$ is convex.
+\end{definition}
+
+\begin{theorem}[Non-negative Second Derivative]
+
+If a function $f(x)$ has a second derivative that is non-nagative (positive) over an interval, then $f(x)$ is (strictly) convex over that interval.
+
+\end{theorem}
+
+\begin{proof}
+
+By Taylor's expansion, let $x_0$ be some point in the interval,
+\[
+	f(x) = f(x_0) + f'(x_0) (x-x_0) + \frac{f''(x^*)}{2}(x-x_0)^2,
+\]
+where $x^*$ lies between $x$ and $x_0$. Since second derivative is non-negative, we have
+\[
+	f(x) \geq f(x_0) + f'(x_0)(x-x_0).
+\]
+Let $x_0=\lambda x_1 + (1-\lambda)x_2$. Take $x = x_1$, we obtain
+\begin{equation}
+\label{eq:convex_1}
+	f(x_1) \geq f(x_0) + f'(x_0)((1-\lambda)(x_1-x_2)).
+\end{equation}
+Take $x=x_2$, we obtain
+\begin{equation}
+\label{eq:convex_2}
+	f(x_2) \geq f(x_0) + f'(x_0)(\lambda(x_2-x_1)).
+\end{equation}
+Multiply Equation (\ref{eq:convex_1}) by $\lambda$ and (\ref{eq:convex_2}) by $1-\lambda$, and adding them, we obtain
+\[
+	\lambda f(x_1) + (1-\lambda)f(x_2) \geq f(x_0) = f(\lambda x_1 + (1-\lambda)x_2).
+\]
+
+\end{proof}
+
+\begin{theorem}[Jensen's Inequality]
+If $f$ is a convex function and $X$ is a random variable, then
+\[
+	\mathbb{E}[f(X)] \geq f(\mathbb{E}[X]).
+\]
+If $f$ is strictly convex, then the equality implies $X = \mathbb{E}[X]$ with probability $1$ ($X$ is a constant).
+\end{theorem}
+
+\begin{proof}
+
+We only prove for discrete case. By induction on the size of support. For two-point support, with probability $p_1,p_2$, by convexity,
+\[
+	\mathbb{E}[f(X)] = p_1 f(x_1) + p_2 f(x_2) \geq f(p_1x_1 + p_2 x_2) = f(\mathbb{E}[X]).
+\]
+Now suppose it is true for support of $k-1$ points. Let $p_i' = p_i/(1-p_k)$ for $i = 1, 2, \cdots, k-1$, we have
+\[
+\begin{aligned}
+	\mathbb{E}[f(X)]
+	&= p_k f(x_k) + (1- p_k) \sum_{i=1}^{k-1}p_i'f(x_i) \\
+	&\geq p_k f(x_k) + (1- p_k) f\left( \sum_{i=1}^{k-1}p_i'x_i \right) \\
+	&\geq f\left(p_k x_k + \sum_{i=1}^{k-1}p_i'x_i \right) = f(\mathbb{E}[X]).
+\end{aligned}
+\]
+
+\end{proof}
+
+\end{document}

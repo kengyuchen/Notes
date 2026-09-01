@@ -13,9 +13,11 @@ This repository includes notes of various topics in mathematics.
 ## Abstract Algebra
 1. [Finite Fields](math/Finite%20Fields/main.pdf)
 
+## Probability
+1. [Probability Inequalities](math/Probability/Probability_Inequalities/main.pdf)
 
 # Cryptography
 
 1. [Birthday Problem](crypto/Birthday/birthday.pdf)
 2. [Pairing](crypto/pairing/main.pdf)
-3. [Close Vector](crypto/Finding_a_Close_Point_in_a_Lattice/main.pdf)
+3. [Close Point in a Lattice](crypto/Finding_a_Close_Point_in_a_Lattice/main.pdf)
