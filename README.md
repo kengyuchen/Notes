@@ -12,9 +12,11 @@ This repository includes notes of various topics in mathematics.
 
 ## Abstract Algebra
 1. [Finite Fields](math/Finite%20Fields/main.pdf)
+2. [Schur's Theorem](math/Schur/main.pdf)
 
 ## Probability
 1. [Probability Inequalities](math/Probability/Probability_Inequalities/main.pdf)
+
 
 # Cryptography
 

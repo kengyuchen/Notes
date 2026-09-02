@@ -1,0 +1,103 @@
+%%%%%%%%%%%%%%%%%%%%
+
+% Project Name: Schur's Theorem
+% File: main.tex
+% Author: Keng-Yu Chen
+
+%%%%%%%%%%%%%%%%%%%%
+
+\input{header}
+
+\begin{document}
+\maketitle
+
+\section{Ramsey Number}
+
+Let $K_n$ be the complete graph on $n$ vertices.
+
+\begin{definition}[Ramsey Number]
+	$R(r_1, \dots, r_k)$ is the smallest number $R$ such that for any $k$-coloring of $K_R$, there exists a color $i$ such that $K_R$ contains at least one subgraph $K_{r_i}$ of color $i$.
+\end{definition}
+
+\begin{example}
+	It is known that $R(3,3) = 6$. Therefore, for any $2$-coloring of the edges of $K_6$, one can always find a monochromatic subgraph $K_3$.
+
+	The following $2$-coloring of $K_5$ shows that $R(3,3) > 5$: for this coloring, one cannot find any monochromatic $K_3$.
+
+\begin{center}
+\begin{tikzpicture}[every node/.style={circle, fill=black, inner sep=2pt}]
+	\foreach \i/\angle in {1/90, 2/162, 3/234, 4/306, 5/18} {
+		\node (v\i) at (\angle:2) {};
+	}
+	\draw[red, thick] (v1) -- (v2) -- (v3) -- (v4) -- (v5) -- (v1);
+	\draw[blue, thick] (v1) -- (v3) (v3) -- (v5) (v5) -- (v2) (v2) -- (v4) (v4) -- (v1);
+\end{tikzpicture}
+\end{center}
+
+\end{example}
+
+Ramsey's theorem guarantees that $R(r_1, \dots, r_k)$ exists and is well-defined.
+
+
+\section{Schur's Theorem}
+
+\begin{theorem}[Schur]
+\label{thm:schur}
+Given $k > 1$, there exists an integer $N$ such that for all $n \geq N$ and every $k$-coloring of $\{1, \dots, n\}$, there exist $x, y, z \in \{1, \dots, n\}$ such that $x + y = z$ and $x, y, z$ are of the same color.
+\end{theorem}
+
+\begin{proof}
+	Consider $N = R(\underbrace{3, \dots, 3}_{k \text{ times}})$. By the definition of the Ramsey number, for any $k$-coloring $C$ of the edges of $K_N$ and any $n \geq N$, there exists a monochromatic subgraph $K_3$.
+
+	Now, given any $k$-coloring $v$ of $\{1, \dots, n\}$, define a $k$-coloring of the edges of $K_n$ by $C(i,j) = v(j-i)$ for edge $(i,j)$.
+
+	A monochromatic $K_3$ subgraph of $K_n$ means there exist three numbers $a, b, c$ such that the edges of the three vertices, $C(a,b), C(b,c), C(a,c)$, are of the same color. This implies $v(b-a) = v(c-b) = v(c-a)$.
+
+	Let $x = b-a$, $y = c-b$, $z = c-a$. Then $x, y, z$ satisfy $x + y = z$ and $v(x) = v(y) = v(z)$.
+
+\end{proof}
+
+We call the smallest such $N$ in Theorem \ref{thm:schur} the \emph{Schur number} $s(k)$.
+
+\section{Fermat's Last Theorem in Finite Fields}
+
+\begin{theorem}
+	\label{thm:flt-finite-fields}
+	Given $n > 1$, there exists a prime $p_0$ such that for all primes $p \geq p_0$, the equation
+	\[
+		x^n + y^n = z^n \bmod p
+	\]
+	has a non-trivial integer solution ($p \nmid xyz$).
+\end{theorem}
+
+\begin{proof}
+	Let $p_0 > s(n)$ be a prime and let $p \geq p_0$ be another prime. Since $p - 1 \geq s(n)$, for any $n$-coloring of $\{1, \dots, p-1\}$, there exists a solution $(x,y,z)$ with $x+y=z$ and $x,y,z$ of the same color. Notice that, for any $k < n$, the same conclusion holds for any $k$-coloring of $\{1, \dots, p-1\}$.
+
+	Consider the group $\Z_p^*$ and its subgroup
+	\[
+		A_n = \{ x^n : x \in \Z_p^* \}.
+	\]
+
+	\begin{claim}
+		$|A_n| = \dfrac{p-1}{\gcd(n, p-1)} =: k$.
+	\end{claim}
+
+	\begin{proof}[Proof of Claim]
+		There are $\gcd(n, p-1)$ solutions $\phi_i$ of $X^n = 1$. Given $x \in \Z_p^*$, the set $\{x \phi_i\}_i$ consists of all the (disjoint) solutions to $X^n = x^n$. Thus each value $x^n$ is attained by exactly $\gcd(n, p-1)$ elements of $\Z_p^*$, so there are $\dfrac{p-1}{\gcd(n, p-1)}$ possible values of $x^n$.
+
+	\end{proof}
+
+	Consider all cosets of $A_n$: numbers $a_1, \dots, a_k \in \Z_p^*$ such that the $a_i A_n$ are disjoint and $\Z_p^* = \bigcup_{i \in [k]} a_i A_n$. Define the mapping $v(x) = i$ if $x \in a_i A_n$.
+
+	Then $v$ is a $k$-coloring of $\{1, \dots, p-1\}$. Since $k < n$, there exist $x, y, z$ such that $x + y = z$ and they are of the same color, say color $i$. This means there exist $x_i, y_i, z_i \in \Z_p^*$ such that
+	\[
+		x + y = z \quad \wedge \quad x = a_i x_i^n \bmod p, \; y = a_i y_i^n \bmod p, \; z = a_i z_i^n \bmod p.
+	\]
+	Hence
+	\[
+		a_i x_i^n + a_i y_i^n = a_i z_i^n \bmod p \implies x_i^n + y_i^n = z_i^n \bmod p.
+	\]
+\end{proof}
+
+
+\end{document}
